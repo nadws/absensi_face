@@ -16,5 +16,21 @@ class UserController extends Controller
         ]);
     }
 
-    public function create() {}
+    public function create()
+    {
+        return Inertia::render('User/create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password'
+        ]);
+
+        User::create($request->all());
+        return redirect()->route('users');
+    }
 }
