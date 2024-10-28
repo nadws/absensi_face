@@ -20,7 +20,7 @@ export default function UserIndex({ auth }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("user.store"), {
+        post(route("users.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 alert("User Created");
