@@ -8,11 +8,22 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+
         $users = User::paginate(10);
+
+        if (empty($search)) {
+            $users = $users;
+        } else {
+            $users = User::where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(10);
+        }
         return Inertia::render('User/index', [
-            'users' => $users
+            'users' => $users,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 
