@@ -1,35 +1,11 @@
 import Pagination from "@/Components/Pagination";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { useState, useEffect } from "react";
-import { debounce } from "lodash"; // Import debounce from lodash or write your own
-import { Inertia } from "@inertiajs/inertia";
+
+import SearchTable from "@/Components/SearchTable";
 
 export default function UserIndex({ auth, users, filters }) {
-    const [search, setSearch] = useState(filters.search || "");
-
-    const handleSearch = (event) => {
-        setSearch(event.target.value);
-    };
-
-    useEffect(() => {
-        const delayedSearch = debounce(() => {
-            Inertia.get(route("users"), { search });
-        }, 300);
-
-        if (search) {
-            delayedSearch();
-        } else {
-            // Jika search kosong, kirimkan tanpa filter
-            Inertia.get(route("users"));
-        }
-
-        return () => {
-            delayedSearch.cancel();
-        };
-    }, [search]);
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -57,13 +33,8 @@ export default function UserIndex({ auth, users, filters }) {
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm">
                         <div className="p-6 text-gray-900">
-                            <input
-                                type="text"
-                                value={search}
-                                onChange={handleSearch}
-                                placeholder="Search by name or email"
-                                className="mb-4 px-4 py-2 border rounded"
-                            />
+                            <SearchTable filters={filters} />
+
                             <table className="min-w-full">
                                 <thead>
                                     <tr className="border-b-2">
@@ -98,7 +69,7 @@ export default function UserIndex({ auth, users, filters }) {
                                     ))}
                                 </tbody>
                             </table>
-                            {/* <Pagination links={users.links} /> */}
+                            <Pagination links={users.links} />
                         </div>
                     </div>
                 </div>

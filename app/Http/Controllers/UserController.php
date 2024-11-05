@@ -12,13 +12,9 @@ class UserController extends Controller
     {
         $search = $request->search;
 
-        $users = User::paginate(10);
+        $users = User::where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(10);
 
-        if (empty($search)) {
-            $users = $users;
-        } else {
-            $users = User::where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(10);
-        }
+
         return Inertia::render('User/index', [
             'users' => $users,
             'filters' => [
