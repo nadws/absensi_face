@@ -52,23 +52,31 @@ export default function UserIndex({ auth, users, filters }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {users.data.map(({ id, name, email }) => (
-                                        <tr key={id} className="border-b">
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                {id}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                {name}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                {email}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap"></td>
-                                        </tr>
-                                    ))}
+                                    {users.data.map(
+                                        ({ id, name, email }, index) => (
+                                            <tr key={id} className="border-b">
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    {(users.current_page - 1) *
+                                                        users.per_page +
+                                                        index +
+                                                        1}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    {name}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    {email}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap"></td>
+                                            </tr>
+                                        )
+                                    )}
                                 </tbody>
                             </table>
-                            <Pagination links={users.links} />
+                            <Pagination
+                                links={users.links}
+                                searchQuery={filters.search}
+                            />
                         </div>
                     </div>
                 </div>
