@@ -3,13 +3,13 @@ import { useState } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 
-export default function Search({ filters }) {
+export default function Search({ filters, routes }) {
     const { get, errors, processing, recentlySuccessful } = useForm();
     const [search, setSearch] = useState(filters.search || ""); // gunakan state lokal
 
     const submit = (e) => {
         e.preventDefault();
-        get(route("users", { search }), { preserveScroll: true }); // kirim nilai search saat submit
+        get(route(routes, { search }), { preserveScroll: true }); // kirim nilai search saat submit
     };
     return (
         <form onSubmit={submit} className="float-end">

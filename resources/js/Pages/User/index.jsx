@@ -2,7 +2,6 @@ import Pagination from "@/Components/Pagination";
 import { Link, useForm } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-
 import SearchTable from "@/Components/SearchTable";
 
 export default function UserIndex({ auth, users, filters }) {
@@ -33,7 +32,7 @@ export default function UserIndex({ auth, users, filters }) {
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm">
                         <div className="p-6 text-gray-900">
-                            <SearchTable filters={filters} />
+                            <SearchTable filters={filters} routes="users" />
 
                             <table className="min-w-full">
                                 <thead>
