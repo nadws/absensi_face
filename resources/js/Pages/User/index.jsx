@@ -33,7 +33,13 @@ export default function UserIndex({ auth, users, filters }) {
                     <div className="bg-white overflow-hidden shadow-sm">
                         <div className="p-6 text-gray-900">
                             <SearchTable filters={filters} routes="users" />
+                            <br />
 
+                            {filters.search && (
+                                <span className="border border-gray-400 px-4 py-2 mt-28 rounded-lg">
+                                    {" '' " + filters.search + " '' "}
+                                </span>
+                            )}
                             <table className="min-w-full mt-4">
                                 <thead>
                                     <tr className="border-b-2 border-t-2">
@@ -81,7 +87,7 @@ export default function UserIndex({ auth, users, filters }) {
                                                             id
                                                         )}
                                                     >
-                                                        Edit
+                                                        <i class="fa-solid fa-pen-to-square"></i>
                                                     </Link>
                                                 </td>
                                             </tr>
