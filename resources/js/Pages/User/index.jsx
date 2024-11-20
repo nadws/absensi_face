@@ -34,11 +34,11 @@ export default function UserIndex({ auth, users, filters }) {
                         <div className="p-6 text-gray-900">
                             <SearchTable filters={filters} routes="users" />
 
-                            <table className="min-w-full">
+                            <table className="min-w-full mt-4">
                                 <thead>
-                                    <tr className="border-b-2">
+                                    <tr className="border-b-2 border-t-2">
                                         <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            Id
+                                            #
                                         </th>
                                         <th className="px-6 py-3 text-left text-lg font-medium text-black">
                                             Name
@@ -49,11 +49,14 @@ export default function UserIndex({ auth, users, filters }) {
                                         <th className="px-6 py-3 text-left text-lg font-medium text-black">
                                             Role
                                         </th>
+                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
+                                            Action
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {users.data.map(
-                                        ({ id, name, email }, index) => (
+                                        ({ id, name, email, role }, index) => (
                                             <tr key={id} className="border-b">
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {(users.current_page - 1) *
@@ -67,7 +70,20 @@ export default function UserIndex({ auth, users, filters }) {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {email}
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap"></td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    {role}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <Link
+                                                        className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                                        href={route(
+                                                            "users.edit",
+                                                            id
+                                                        )}
+                                                    >
+                                                        Edit
+                                                    </Link>
+                                                </td>
                                             </tr>
                                         )
                                     )}
@@ -76,6 +92,7 @@ export default function UserIndex({ auth, users, filters }) {
                             <Pagination
                                 links={users.links}
                                 searchQuery={filters.search}
+                                paginate={filters.paginate}
                             />
                         </div>
                     </div>

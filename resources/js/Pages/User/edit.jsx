@@ -10,26 +10,26 @@ import SelectBox from "@/Components/SelectBox";
 import roles from "@/data/role.json";
 import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function UserCreate({ auth }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
+export default function UserEdit({ user, auth }) {
+    const { data, setData, put, errors, processing, recentlySuccessful } =
         useForm({
-            name: "",
-            email: "",
+            name: user.name,
+            email: user.email,
             password: "",
             password_confirmation: "",
-            role: "user",
+            role: user.role,
         });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("users.store"), {
+        put(route("users.update", user.id), {
             preserveScroll: true,
             onSuccess: () => {
-                alert("User Created");
+                alert("User Update");
             },
             onError: (errors) => {
-                alert("User not created");
+                alert("User not Update");
             },
         });
     };
@@ -51,11 +51,11 @@ export default function UserCreate({ auth }) {
                             <section className="max-w-xl">
                                 <header>
                                     <h2 className="text-lg font-medium text-gray-900">
-                                        Create User
+                                        Edit User
                                     </h2>
 
                                     <p className="mt-1 text-sm text-gray-600">
-                                        Create a new user.
+                                        Edit user detail.
                                     </p>
                                 </header>
 
@@ -120,14 +120,14 @@ export default function UserCreate({ auth }) {
                                                 setData("role", e.target.value)
                                             }
                                             id="role"
-                                            currentValue="user"
+                                            currentValue={data.role}
                                             options={roles}
                                             className="w-full"
                                         />
 
                                         <InputError
                                             className="mt-2"
-                                            message={errors.email}
+                                            message={errors.role}
                                         />
                                     </div>
 

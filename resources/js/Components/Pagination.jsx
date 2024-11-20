@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-export default function Pagination({ links, searchQuery = "" }) {
+export default function Pagination({ links, searchQuery = "", paginate = 10 }) {
     // Pastikan searchQuery adalah string kosong jika tidak ada pencarian
     const validSearchQuery =
         searchQuery && searchQuery !== "null" ? searchQuery : "";
@@ -14,7 +14,7 @@ export default function Pagination({ links, searchQuery = "" }) {
                         link.url
                             ? `${link.url}${
                                   link.url.includes("?") ? "&" : "?"
-                              }search=${validSearchQuery}`
+                              }search=${validSearchQuery}&paginate=${paginate}`
                             : ""
                     }
                     className={

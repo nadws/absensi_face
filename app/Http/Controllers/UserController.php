@@ -13,13 +13,14 @@ class UserController extends Controller
         $search = $request->search;
         $paginate = $request->paginate ?? 10;
 
-        $users = User::where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate($paginate);
+        $users = User::where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->orWhere('role', 'like', '%' . $search . '%')->orderBy('id', 'desc')->paginate($paginate);
 
 
         return Inertia::render('User/index', [
             'users' => $users,
             'filters' => [
                 'search' => $search,
+                'paginate' => $paginate
             ],
         ]);
     }
@@ -39,6 +40,31 @@ class UserController extends Controller
         ]);
 
         User::create($request->all());
+        return redirect()->route('users');
+    }
+    public function edit(User $user)
+    {
+
+        return Inertia::render('User/edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8',
+            'password_confirmation' => 'nullable|same:password'
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => $request->password ? bcrypt($request->password) : $user->password,
+        ]);
         return redirect()->route('users');
     }
 }
