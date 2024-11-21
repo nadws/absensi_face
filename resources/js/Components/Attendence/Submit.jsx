@@ -4,7 +4,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
-import SelectBox from "@/Components/SelectBox";
+import SelectBox from "@/Components/Select2box";
 import { useState, useEffect } from "react";
 
 export default function SubmitAttendence() {
@@ -42,7 +42,7 @@ export default function SubmitAttendence() {
                 <InputLabel htmlFor="info" value="Silahkan lakukan absensi" />
 
                 <SelectBox
-                    onChange={(e) => setData("status", e.target.value)}
+                    onChange={(e) => setData("status", e)}
                     options={[
                         { value: "attend", label: "Hadir" },
                         { value: "leave", label: "Cuti" },
@@ -50,6 +50,7 @@ export default function SubmitAttendence() {
                         { value: "bussiness_trip", label: "Perjalanan dinas" },
                         { value: "remote", label: "Kerja remote" },
                     ]}
+                    currentValue={data.status}
                     className="w-full"
                 />
 

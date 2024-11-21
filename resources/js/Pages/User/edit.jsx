@@ -6,7 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Link, useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
-import SelectBox from "@/Components/SelectBox";
+import Select2Box from "@/Components/Select2box";
 import roles from "@/data/role.json";
 import SecondaryButton from "@/Components/SecondaryButton";
 
@@ -115,10 +115,8 @@ export default function UserEdit({ user, auth }) {
                                             htmlFor="role"
                                             value="Role"
                                         />
-                                        <SelectBox
-                                            onChange={(e) =>
-                                                setData("role", e.target.value)
-                                            }
+                                        <Select2Box
+                                            onChange={(e) => setData("role", e)}
                                             id="role"
                                             currentValue={data.role}
                                             options={roles}

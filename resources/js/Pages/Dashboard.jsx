@@ -21,9 +21,9 @@ export default function Dashboard({ auth }) {
                             You're logged in!
                         </div>
                     </div>
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white z-0 overflow-hidden shadow-sm sm:rounded-lg min-h-[350px]">
                         <section className="max-w-xl">
-                            <div className="p-6 text-gray-900">
+                            <div className="p-6 text-gray-900 ">
                                 <SubmitAttendence />
                             </div>
                         </section>
