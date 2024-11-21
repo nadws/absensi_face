@@ -43,7 +43,7 @@ export default function Search({ filters, routes }) {
             <SelectBox
                 onChange={(e) =>
                     router.get(
-                        route("users"),
+                        route(routes),
                         { paginate: e.target.value },
                         { preserveState: true }
                     )
