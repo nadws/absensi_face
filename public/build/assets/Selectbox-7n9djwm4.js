@@ -1,0 +1,1 @@
+import{j as o}from"./app-GnvZi1Jz.js";function n({className:r="",options:s=[],currentValue:a="",...l}){return o.jsx("select",{...l,defaultValue:a,className:"border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block  "+r,children:s.map((e,d)=>o.jsx("option",{value:e.value,children:e.label},d))})}export{n as S};
