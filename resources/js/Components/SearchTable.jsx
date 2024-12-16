@@ -34,10 +34,11 @@ export default function Search({ filters, routes, paging, className = "" }) {
             <div className={"float-end" + className}>
                 <TextInput
                     id="search"
-                    className="mb-4 mr-4 px-4 py-2 border rounded"
+                    className="w-full mb-4 px-4 py-2 border rounded"
                     value={search}
                     onChange={handleSearchChange} // Panggil handleSearchChange
                     autoComplete="search"
+                    placeholder="Search..."
                 />
             </div>
             {paging && (
