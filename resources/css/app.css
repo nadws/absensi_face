@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Scrollbar */
+.thin-scrollbar::-webkit-scrollbar {
+    height: 12px; /* Tinggi scrollbar horizontal */
+    margin-top: 20px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Warna background track scrollbar */
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #f46700; /* Warna scrollbar */
+    border-radius: 10px; /* Membuat sudut scrollbar bulat */
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #f46700; /* Warna scrollbar saat di-hover */
+}

@@ -32,7 +32,11 @@ export default function UserIndex({ auth, users, filters }) {
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm">
                         <div className="p-6 text-gray-900">
-                            <SearchTable filters={filters} routes="users" />
+                            <SearchTable
+                                filters={filters}
+                                routes="users"
+                                paging="Y"
+                            />
                             <table className="min-w-full mt-4">
                                 <thead>
                                     <tr className="border-b-2 border-t-2">

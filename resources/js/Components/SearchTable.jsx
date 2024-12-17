@@ -4,7 +4,13 @@ import SelectBox from "@/Components/Selectbox";
 import pagelenght from "@/data/pagelength.json";
 import { router } from "@inertiajs/react";
 
-export default function Search({ filters, routes, paging, className = "" }) {
+export default function Search({
+    filters,
+    routes,
+    paging,
+    placeholder = "Search...",
+    className = "",
+}) {
     const [search, setSearch] = useState(filters.search || ""); // gunakan state lokal
     const [typingTimeout, setTypingTimeout] = useState(null); // untuk debounce
 
@@ -31,14 +37,14 @@ export default function Search({ filters, routes, paging, className = "" }) {
 
     return (
         <>
-            <div className={"float-end" + className}>
+            <div className={className}>
                 <TextInput
                     id="search"
                     className="w-full mb-4 px-4 py-2 border rounded"
                     value={search}
                     onChange={handleSearchChange} // Panggil handleSearchChange
                     autoComplete="search"
-                    placeholder="Search..."
+                    placeholder={placeholder}
                 />
             </div>
             {paging && (
