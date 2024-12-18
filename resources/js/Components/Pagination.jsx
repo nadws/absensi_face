@@ -6,12 +6,11 @@ export default function Pagination({
     paginate = 10,
     url = "",
 }) {
-    // Pastikan searchQuery adalah string kosong jika tidak ada pencarian
     const validSearchQuery =
         searchQuery && searchQuery !== "null" ? searchQuery : "";
 
     return (
-        <div className="flex mt-8 space-x-2 px-5">
+        <div className="flex flex-wrap justify-center mt-8 space-x-2 px-5">
             {links.map((link, index) => (
                 <Link
                     key={index}
@@ -24,8 +23,8 @@ export default function Pagination({
                     }
                     className={
                         link.active
-                            ? "bg-[#F46700] text-white px-4 py-2 border border-[#F46700] rounded-md "
-                            : "text-[#F46700] hover:bg-[#F46700] hover:text-white px-4 py-2 border "
+                            ? "bg-[#F46700] text-white px-4 py-2 border border-[#F46700] rounded-md"
+                            : "text-[#F46700] hover:bg-[#F46700] hover:text-white px-4 py-2 border rounded-md"
                     }
                     dangerouslySetInnerHTML={{ __html: link.label }}
                 />

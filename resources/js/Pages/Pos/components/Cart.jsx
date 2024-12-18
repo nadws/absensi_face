@@ -1,11 +1,12 @@
 import numeral from "numeral";
+import { Link } from "@inertiajs/react";
 export default function Cart({ cardItems, removeFromCards }) {
     const handleImageError = (e) => {
         e.target.onerror = null; // Mencegah loop jika default image juga tidak tersedia
         e.target.src = "/image/image.png"; // Path ke gambar default
     };
     return (
-        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mr-10 col-span-2">
+        <div className="overflow-hidden bg-white shadow-sm  mr-10 col-span-2 hidden lg:block">
             <div className="w-full max-w-2xl bg-white rounded-lg p-6 ">
                 <h1 className="text-2xl font-semibold mb-4 font-mona">
                     Shopping Cart
@@ -71,7 +72,7 @@ export default function Cart({ cardItems, removeFromCards }) {
                     <thead>
                         <tr>
                             <th className="text-left font-mona" width={"70%"}>
-                                Sub Total
+                                Total
                             </th>
                             <th className="text-right font-mona" width={"2%"}>
                                 Rp
@@ -86,7 +87,7 @@ export default function Cart({ cardItems, removeFromCards }) {
                                 ).format("0,0")}
                             </th>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <th
                                 className="text-left font-thin text-sm font-mona"
                                 width={"70%"}
@@ -135,13 +136,16 @@ export default function Cart({ cardItems, removeFromCards }) {
                                     )
                                 ).format("0,0")}
                             </th>
-                        </tr>
+                        </tr> */}
                     </thead>
                 </table>
 
-                <button className="w-full mt-4 font-mona bg-[#F46700] text-white py-3 rounded-md hover:bg-[#f8b88a]">
+                <Link
+                    href={route("pos.payment")}
+                    className="w-full mt-4 font-mona bg-[#F46700] text-white py-3 rounded-md hover:bg-[#f8b88a] text-center block"
+                >
                     Continue to Payment
-                </button>
+                </Link>
             </div>
         </div>
     );

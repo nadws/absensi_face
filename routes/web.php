@@ -29,6 +29,7 @@ Route::middleware('auth', 'admin')->group(function () {
 });
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/pos', [PosController::class, 'index'])->name('pos');
+    Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment');
 });
 
 Route::middleware('auth')->group(function () {

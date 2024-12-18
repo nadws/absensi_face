@@ -3,14 +3,17 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import SearchTable from "@/Components/SearchTable";
 import { useState, useEffect } from "react";
+import { Link } from "@inertiajs/react";
 import numeral from "numeral";
 import Cart from "@/Pages/Pos/components/Cart";
 import Product from "@/Pages/Pos/components/Product";
 import Kategori from "@/Pages/Pos/components/Kategori";
-import { Link } from "@inertiajs/react";
+import CartMobile from "@/Pages/Pos/components/CartMobile";
 
 export default function Pos({ auth, data, filters }) {
     const [cardItems, setCardItems] = useState([]);
+    const [cartCount, setCartCount] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const storedCardItems = localStorage.getItem("cardItems");
@@ -29,6 +32,7 @@ export default function Pos({ auth, data, filters }) {
             const updatedCardItems = [...cardItems, item];
             localStorage.setItem("cardItems", JSON.stringify(updatedCardItems));
             setCardItems(updatedCardItems);
+            setCartCount(updatedCardItems.length);
         }
     };
     const removeFromCards = (item) => {
@@ -38,12 +42,29 @@ export default function Pos({ auth, data, filters }) {
         localStorage.setItem("cardItems", JSON.stringify(updatedData));
 
         setCardItems(updatedData);
-
-        // Update favorite status for this specific item
+        setCartCount(updatedData.length);
     };
     const handleImageError = (e) => {
-        e.target.onerror = null; // Mencegah loop jika default image juga tidak tersedia
-        e.target.src = "/image/image.png"; // Path ke gambar default
+        e.target.onerror = null;
+        e.target.src = "/image/image.png";
+    };
+
+    useEffect(() => {
+        const cardItems = JSON.parse(localStorage.getItem("cardItems")) || [];
+        setCartCount(cardItems.length);
+        const handleStorageChange = () => {
+            const updatedCardItems =
+                JSON.parse(localStorage.getItem("cardItems")) || [];
+            setCartCount(updatedCardItems.length);
+        };
+        window.addEventListener("storage", handleStorageChange);
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen); // Toggle state
     };
 
     return (
@@ -51,15 +72,33 @@ export default function Pos({ auth, data, filters }) {
             <Head title="POS" />
             <div className="py-4">
                 <div className="grid grid-cols-5 gap-2">
-                    <div className="col-span-3">
+                    <div className="col-span-5 lg:col-span-3">
                         <div className="flex flex-col">
                             <div className="ml-9">
                                 <Link href="/dashboard" className="text-xl">
                                     <i className="fas fa-home text-[#F46700]  "></i>
                                 </Link>
+                                <button
+                                    href="/dashboard"
+                                    className="relative text-xl float-end mr-8 lg:hidden"
+                                    onClick={toggleSidebar}
+                                >
+                                    <i className="fa-solid fa-cart-shopping text-[#F46700] "></i>
+                                    <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                        {cartCount}
+                                    </span>
+                                </button>
+
+                                <CartMobile
+                                    isOpen={isOpen}
+                                    toggleSidebar={toggleSidebar}
+                                    cardItems={cardItems}
+                                    removeFromCards={removeFromCards}
+                                />
                             </div>
-                            <div className="grid grid-cols-3">
-                                <div className=" col-span-2 mb-2 p-4">
+
+                            <div className="grid lg:grid-cols-3 sm:grid-cols-4">
+                                <div className=" sm:col-span-2 col-span-3 mb-2 p-4">
                                     <h2 className="font-semibold text-xl text-gray-800 text-left ml-4 font-mona">
                                         Welcome , POS
                                     </h2>
@@ -70,7 +109,7 @@ export default function Pos({ auth, data, filters }) {
                                 <SearchTable
                                     filters={filters}
                                     routes="pos"
-                                    className="w-full   mt-4 px-8"
+                                    className="w-full   sm:mt-4 mt-2 px-8 col-span-4 sm:col-span-2 lg:col-span-1"
                                     placeholder="Search product..."
                                 />
                             </div>
