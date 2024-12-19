@@ -30,6 +30,7 @@ Route::middleware('auth', 'admin')->group(function () {
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/pos', [PosController::class, 'index'])->name('pos');
     Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment');
+    Route::post('/pos/save_payment', [PosController::class, 'save_payment'])->name('pos.save_payment');
 });
 
 Route::middleware('auth')->group(function () {

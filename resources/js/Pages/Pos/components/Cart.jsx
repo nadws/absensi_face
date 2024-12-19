@@ -78,7 +78,6 @@ export default function Cart({ cardItems, removeFromCards }) {
                                 Rp
                             </th>
                             <th className="text-right font-mona" width={"28%"}>
-                                Rp.
                                 {numeral(
                                     cardItems.reduce(
                                         (total, item) => total + item.harga,

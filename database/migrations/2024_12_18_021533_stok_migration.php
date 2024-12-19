@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stok_produk', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id')->primary()->primary();
             $table->integer('id_produk');
+            $table->string('no_invoice', 150);
             $table->double('qty_debit');
             $table->double('qty_kredit');
             $table->double('ttl_rp');

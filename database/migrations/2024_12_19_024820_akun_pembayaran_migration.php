@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoice', function (Blueprint $table) {
+        Schema::create('akun_pembayaran', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->string('no_invoice');
-            $table->date('tgl_invoice');
-            $table->double('ttl_rp');
-            $table->string('admin', 50);
-            $table->integer('urutan');
+            $table->string('akun', 50);
+            $table->integer('kategori_akun_id');
             $table->timestamps();
         });
     }

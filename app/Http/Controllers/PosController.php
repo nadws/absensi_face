@@ -72,7 +72,50 @@ class PosController extends Controller
         }
 
         return Inertia::render('Pos/payment', [
-            'no_invoice' => $no_invoice
+            'no_invoice' => $no_invoice,
+            'kategori' => DB::table('kategori_pembayaran')->get(),
+            'akun' => DB::table('akun_pembayaran')->get()
         ]);
+    }
+
+    public function save_payment(Request $request)
+    {
+
+        $urutan = DB::selectOne("SELECT MAX(urutan) as urutan FROM invoice");
+        if (empty($urutan->urutan)) {
+            $no_invoice = 'INV-1001';
+            $urutan = 1001;
+        } else {
+            $no_invoice = 'INV-' . ($urutan->urutan + 1);
+            $urutan = $urutan->urutan + 1;
+        }
+        $ttl_rp = 0;
+        for ($i = 0; $i < count($request->id_produk); $i++) {
+            $produk = DB::table('produks')->where('id', $request->id_produk[$i])->first();
+            $data = [
+                'id_produk' => $request->id_produk[$i],
+                'no_invoice' => $no_invoice,
+                'qty_debit' => 0,
+                'qty_kredit' => 1,
+                'ttl_rp' => $produk->harga,
+                'status' => 'keluar',
+                'admin' => auth()->user()->name,
+                'created_at' => now(),
+                'created_at' => now(),
+            ];
+            DB::table('stok_produk')->insert($data);
+            $ttl_rp += $produk->harga;
+        }
+        $data_invoice = [
+            'tgl_invoice' => now(),
+            'no_invoice' => $no_invoice,
+            'ttl_rp' => $ttl_rp,
+            'admin' => auth()->user()->name,
+            'urutan' => $urutan,
+            'created_at' => now(),
+            'created_at' => now(),
+        ];
+        DB::table('invoice')->insert($data_invoice);
+        return redirect()->route('pos')->with('success', 'Pembayaran Berhasil');
     }
 }
