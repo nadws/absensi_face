@@ -219,7 +219,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                         disabled={totalTagihan > totalPembayaran || processing}
                         submitProcessing={processing}
                     >
-                        Pay
+                        Pay Now
                     </PrimaryButton>
                 </div>
             </div>
