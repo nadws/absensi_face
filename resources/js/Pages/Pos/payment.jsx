@@ -9,6 +9,7 @@ import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
+import PaymentMobile from "@/Pages/pos/components/PaymentMobile";
 
 export default function payment({ no_invoice, kategori, akun }) {
     const [cardItems, setCardItems] = useState([]);
@@ -105,10 +106,10 @@ export default function payment({ no_invoice, kategori, akun }) {
     return (
         <form
             onSubmit={submit}
-            className="bg-[#F8F8F8] py-14 px-8  flex h-full"
+            className="bg-[#F8F8F8] md:py-14 md:px-8  flex h-full justify-center w-full"
         >
             <Head title="POS Payment" />
-            <div className="w-1/3 border border-gray-300 rounded-md mr-4 ">
+            <div className="w-1/3 border border-gray-300 rounded-md mr-4 hidden md:block">
                 <div className="border-b  p-4  bg-slate-200">
                     <h5 className="font-mona font-bold text-gray-700">
                         Payment
@@ -144,7 +145,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                     ))}
                 </div>
             </div>
-            <div className="w-2/3 border border-gray-300 rounded-md flext justify-center">
+            <div className="w-2/3 border border-gray-300 rounded-md flext justify-center hidden md:block">
                 <h5 className="text-center mt-6 font-mona text-gray-400 text-lg ">
                     Total Tagihan
                 </h5>
@@ -162,7 +163,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                 <h5 className="text-center mt-6 font-mona text-gray-400 text-lg ">
                     Kembalian
                 </h5>
-                <h5 className="text-center mt-6 font-mona  text-4xl">
+                <h5 className="text-center mt-6 font-mona  text-lg">
                     <span className="text-sm align-top">Rp </span>
                     {numeral(
                         totalPembayaran - totalTagihan < 0
@@ -170,7 +171,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                             : totalPembayaran - totalTagihan
                     ).format("0,0")}
                 </h5>
-                <div className="flex justify-center mt-24">
+                <div className="flex justify-center mt-12">
                     {kategori.map((item) => (
                         <button
                             key={item.id}
@@ -201,7 +202,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                             <TextInput
                                 type="number"
                                 id="nominal"
-                                className="w-full rounded-lg h-11"
+                                className="w-full rounded-lg h-11 "
                                 placeholder={item.akun}
                                 onChange={(e) =>
                                     handleNominalChange(item.id, e.target.value)
@@ -223,6 +224,11 @@ export default function payment({ no_invoice, kategori, akun }) {
                     </PrimaryButton>
                 </div>
             </div>
+            <PaymentMobile
+                cardItems={cardItems}
+                numeral={numeral}
+                totalTagihan={totalTagihan}
+            />
         </form>
     );
 }
