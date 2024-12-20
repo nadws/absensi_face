@@ -9,6 +9,7 @@ import Cart from "@/Pages/Pos/components/Cart";
 import Product from "@/Pages/Pos/components/Product";
 import Kategori from "@/Pages/Pos/components/Kategori";
 import CartMobile from "@/Pages/Pos/components/CartMobile";
+import Swal from "sweetalert2";
 
 export default function Pos({ auth, data, filters }) {
     const [cardItems, setCardItems] = useState([]);
@@ -24,17 +25,33 @@ export default function Pos({ auth, data, filters }) {
         }
     }, []);
 
-    const handleCartClick = (item, event) => {
-        const isItemInCards = cardItems.some(
-            (cardItem) => cardItem.id === item.id
-        );
-        if (!isItemInCards) {
-            const updatedCardItems = [...cardItems, item];
-            localStorage.setItem("cardItems", JSON.stringify(updatedCardItems));
-            setCardItems(updatedCardItems);
-            setCartCount(updatedCardItems.length);
-        }
+    const handleCartClick = (items, event) => {
+        items.forEach((item) => {
+            const isItemInCards = cardItems.some(
+                (cardItem) => cardItem.id === item.id
+            );
+            if (!isItemInCards) {
+                const updatedCardItems = [...cardItems, item];
+                localStorage.setItem(
+                    "cardItems",
+                    JSON.stringify(updatedCardItems)
+                );
+                setCardItems(updatedCardItems);
+                setCartCount(updatedCardItems.length);
+            }
+        });
     };
+    const updateQtyInLocalStorage = (id, newQty) => {
+        const storedItems = JSON.parse(localStorage.getItem("cardItems")) || [];
+        const updatedItems = storedItems.map((item) =>
+            item.id === id
+                ? { ...item, qty: newQty, ttl_rp: newQty * item.harga }
+                : item
+        );
+        localStorage.setItem("cardItems", JSON.stringify(updatedItems));
+        return updatedItems; // Kembalikan array yang diperbarui
+    };
+
     const removeFromCards = (item) => {
         const existingData =
             JSON.parse(localStorage.getItem("cardItems")) || [];
@@ -67,6 +84,17 @@ export default function Pos({ auth, data, filters }) {
         setIsOpen(!isOpen); // Toggle state
     };
 
+    const showSwal = () => {
+        Swal.fire({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "error",
+            title: "Qty tidak mencukupi stok",
+        });
+    };
+
     return (
         <div className="bg-[#F8F8F8]">
             <Head title="POS" />
@@ -94,6 +122,11 @@ export default function Pos({ auth, data, filters }) {
                                     toggleSidebar={toggleSidebar}
                                     cardItems={cardItems}
                                     removeFromCards={removeFromCards}
+                                    updateQtyInLocalStorage={
+                                        updateQtyInLocalStorage
+                                    }
+                                    setCardItems={setCardItems}
+                                    showSwal={showSwal}
                                 />
                             </div>
 
@@ -109,6 +142,7 @@ export default function Pos({ auth, data, filters }) {
                                 <SearchTable
                                     filters={filters}
                                     routes="pos"
+                                    kat={filters.kategori}
                                     className="w-full   sm:mt-4 mt-2 px-8 col-span-4 sm:col-span-2 lg:col-span-1"
                                     placeholder="Search product..."
                                 />
@@ -137,6 +171,9 @@ export default function Pos({ auth, data, filters }) {
                     <Cart
                         cardItems={cardItems}
                         removeFromCards={removeFromCards}
+                        updateQtyInLocalStorage={updateQtyInLocalStorage}
+                        setCardItems={setCardItems}
+                        showSwal={showSwal}
                     />
                 </div>
             </div>

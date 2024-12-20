@@ -14,23 +14,36 @@ export default function payment({ no_invoice, kategori, akun }) {
     const [cardItems, setCardItems] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenValue, setIsOpenValue] = useState(1);
+    const [totalPembayaran, setTotalPembayaran] = useState(0);
+    const [totalTagihan, setTotalTaginah] = useState(0);
 
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
-            id_produk: [],
-            nominal: "0",
+            produk: [],
+            nominal: "",
         });
     const prevCardItems = useRef(cardItems);
 
     useEffect(() => {
         if (prevCardItems.current !== cardItems) {
             setData({
-                id_produk: cardItems.map((item) => item.id),
-                nominal: "10000",
+                produk: cardItems.map((item) => item),
+                nominal: akun.map((item) => ({
+                    id_akun: item.id,
+                    nominal: "",
+                })),
             });
             prevCardItems.current = cardItems; // Simpan nilai sebelumnya
         }
     }, [cardItems, setData]);
+
+    useEffect(() => {
+        const totaltag = cardItems.reduce(
+            (total, item) => total + item.ttl_rp,
+            0
+        );
+        setTotalTaginah(totaltag);
+    }, [cardItems]);
     const submit = (e) => {
         e.preventDefault();
         post(route("pos.save_payment"), {
@@ -65,6 +78,30 @@ export default function payment({ no_invoice, kategori, akun }) {
         setIsOpenValue(item);
     };
 
+    const handleNominalChange = (id, value) => {
+        // Update data nominal terlebih dahulu
+        setData((prevData) => {
+            const updatedNominal = prevData.nominal.map((item) =>
+                item.id_akun === id
+                    ? { ...item, nominal: parseFloat(value) || 0 }
+                    : item
+            );
+
+            // Hitung total pembayaran
+            const totalPembayaran = updatedNominal.reduce(
+                (total, item) => total + item.nominal,
+                0
+            );
+            setTotalPembayaran(totalPembayaran);
+
+            return {
+                ...prevData,
+                nominal: updatedNominal,
+                totalPembayaran, // Simpan total pembayaran di state
+            };
+        });
+    };
+
     return (
         <form
             onSubmit={submit}
@@ -78,10 +115,10 @@ export default function payment({ no_invoice, kategori, akun }) {
                         <span className="float-right">#{no_invoice}</span>
                     </h5>
                 </div>
-                <div className=" overflow-y-scroll h-96">
+                <div className=" overflow-y-scroll h-96 ">
                     {cardItems.map((item) => (
                         <div
-                            className="flex items-center border-b pb-4 "
+                            className="flex items-center border-b pb-4 ml-4"
                             key={item.id}
                         >
                             <img
@@ -95,22 +132,16 @@ export default function payment({ no_invoice, kategori, akun }) {
                                     {item.nama_produk}
                                 </h2>
                                 <p className="text-sm text-[#F46700] font-mona">
-                                    Rp.
-                                    {numeral(item.harga).format("0,0")}
+                                    {numeral(item.qty).format("0,0")} x Rp.
+                                    {numeral(item.harga).format("0,0")} =
+                                    <span>
+                                        {" "}
+                                        Rp.{numeral(item.ttl_rp).format("0,0")}
+                                    </span>
                                 </p>
                             </div>
                         </div>
                     ))}
-                    <input
-                        type="hidden"
-                        onChange={(e) =>
-                            setData(
-                                "id_produk",
-                                cardItems.map((item) => item.id)
-                            )
-                        }
-                        value={data.id_produk}
-                    />
                 </div>
             </div>
             <div className="w-2/3 border border-gray-300 rounded-md flext justify-center">
@@ -119,8 +150,24 @@ export default function payment({ no_invoice, kategori, akun }) {
                 </h5>
                 <h5 className="text-center mt-6 font-mona  text-4xl">
                     <span className="text-sm align-top">Rp </span>
+                    {numeral(totalTagihan).format("0,0")}
+                </h5>
+                <h5 className="text-center mt-6 font-mona text-gray-400 text-lg ">
+                    Total Pembayaran
+                </h5>
+                <h5 className="text-center mt-6 font-mona  text-4xl">
+                    <span className="text-sm align-top">Rp </span>
+                    {numeral(totalPembayaran).format("0,0")}
+                </h5>
+                <h5 className="text-center mt-6 font-mona text-gray-400 text-lg ">
+                    Kembalian
+                </h5>
+                <h5 className="text-center mt-6 font-mona  text-4xl">
+                    <span className="text-sm align-top">Rp </span>
                     {numeral(
-                        cardItems.reduce((total, item) => total + item.harga, 0)
+                        totalPembayaran - totalTagihan < 0
+                            ? 0
+                            : totalPembayaran - totalTagihan
                     ).format("0,0")}
                 </h5>
                 <div className="flex justify-center mt-24">
@@ -156,7 +203,9 @@ export default function payment({ no_invoice, kategori, akun }) {
                                 id="nominal"
                                 className="w-full rounded-lg h-11"
                                 placeholder={item.akun}
-                                required
+                                onChange={(e) =>
+                                    handleNominalChange(item.id, e.target.value)
+                                }
                             />
                         </div>
                     ))}
@@ -166,7 +215,12 @@ export default function payment({ no_invoice, kategori, akun }) {
                         <SecondaryButton>Cancel</SecondaryButton>
                     </Link>
 
-                    <PrimaryButton disabled={processing}>Pay</PrimaryButton>
+                    <PrimaryButton
+                        disabled={totalTagihan > totalPembayaran || processing}
+                        submitProcessing={processing}
+                    >
+                        Pay
+                    </PrimaryButton>
                 </div>
             </div>
         </form>

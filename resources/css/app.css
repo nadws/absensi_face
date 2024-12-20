@@ -20,3 +20,7 @@
 .thin-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #f46700; /* Warna scrollbar saat di-hover */
 }
+.small-swal {
+    padding: 10px; /* Kurangi padding untuk membuatnya lebih kecil */
+    font-size: 14px; /* Kurangi ukuran font */
+}

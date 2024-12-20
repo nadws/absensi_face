@@ -9,6 +9,7 @@ export default function Search({
     routes,
     paging,
     placeholder = "Search...",
+    kat = "",
     className = "",
 }) {
     const [search, setSearch] = useState(filters.search || ""); // gunakan state lokal
@@ -27,7 +28,7 @@ export default function Search({
         setTypingTimeout(
             setTimeout(() => {
                 router.get(
-                    route(routes, { search: value }),
+                    route(routes, { search: value, kat: kat }),
                     {},
                     { preserveState: true, preserveScroll: true }
                 );
@@ -40,7 +41,7 @@ export default function Search({
             <div className={className}>
                 <TextInput
                     id="search"
-                    className="w-full mb-4 px-4 py-2 border rounded"
+                    className=" float-end mb-4 px-4 py-2 border rounded"
                     value={search}
                     onChange={handleSearchChange} // Panggil handleSearchChange
                     autoComplete="search"

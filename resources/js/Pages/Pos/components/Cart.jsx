@@ -1,10 +1,18 @@
 import numeral from "numeral";
 import { Link } from "@inertiajs/react";
-export default function Cart({ cardItems, removeFromCards }) {
+
+export default function Cart({
+    cardItems,
+    removeFromCards,
+    updateQtyInLocalStorage,
+    setCardItems,
+    showSwal,
+}) {
     const handleImageError = (e) => {
         e.target.onerror = null; // Mencegah loop jika default image juga tidak tersedia
         e.target.src = "/image/image.png"; // Path ke gambar default
     };
+
     return (
         <div className="overflow-hidden bg-white shadow-sm  mr-10 col-span-2 hidden lg:block">
             <div className="w-full max-w-2xl bg-white rounded-lg p-6 ">
@@ -44,11 +52,46 @@ export default function Cart({ cardItems, removeFromCards }) {
                                         </p>
                                     </div>
                                     <div className="flex items-center space-x-2">
-                                        <button className="px-2 py-1 bg-gray-200 rounded">
+                                        <button
+                                            className="px-2 py-1 bg-gray-200 rounded"
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                const newQty = item.qty - 1;
+                                                if (newQty <= 0) {
+                                                    removeFromCards(
+                                                        item,
+                                                        event
+                                                    );
+                                                } else {
+                                                    const updatedItems =
+                                                        updateQtyInLocalStorage(
+                                                            item.id,
+                                                            newQty
+                                                        );
+                                                    setCardItems(updatedItems);
+                                                }
+                                            }}
+                                        >
                                             -
                                         </button>
-                                        <span>1</span>
-                                        <button className="px-2 py-1 bg-gray-200 rounded">
+                                        <span>{item.qty}</span>
+                                        <button
+                                            className="px-2 py-1 bg-gray-200 rounded"
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                const newQty = item.qty + 1;
+                                                if (newQty > item.stok) {
+                                                    showSwal();
+                                                } else {
+                                                    const updatedItems =
+                                                        updateQtyInLocalStorage(
+                                                            item.id,
+                                                            newQty
+                                                        );
+                                                    setCardItems(updatedItems);
+                                                }
+                                            }}
+                                        >
                                             +
                                         </button>
                                         <button
@@ -80,7 +123,7 @@ export default function Cart({ cardItems, removeFromCards }) {
                             <th className="text-right font-mona" width={"28%"}>
                                 {numeral(
                                     cardItems.reduce(
-                                        (total, item) => total + item.harga,
+                                        (total, item) => total + item.ttl_rp,
                                         0
                                     )
                                 ).format("0,0")}

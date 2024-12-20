@@ -5,6 +5,9 @@ export default function CartMobile({
     toggleSidebar,
     cardItems,
     removeFromCards,
+    updateQtyInLocalStorage,
+    setCardItems,
+    showSwal,
 }) {
     const handleImageError = (e) => {
         e.target.onerror = null; // Mencegah loop jika default image juga tidak tersedia
@@ -61,11 +64,47 @@ export default function CartMobile({
                                         </p>
                                     </div>
                                     <div className="flex items-center space-x-2">
-                                        <button className="px-2 py-1 bg-gray-200 rounded">
+                                        <button
+                                            className="px-2 py-1 bg-gray-200 rounded"
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                const newQty = item.qty - 1;
+                                                if (newQty <= 0) {
+                                                    removeFromCards(
+                                                        item,
+                                                        event
+                                                    );
+                                                } else {
+                                                    const updatedItems =
+                                                        updateQtyInLocalStorage(
+                                                            item.id,
+                                                            newQty
+                                                        );
+                                                    setCardItems(updatedItems);
+                                                }
+                                            }}
+                                        >
                                             -
                                         </button>
-                                        <span>1</span>
-                                        <button className="px-2 py-1 bg-gray-200 rounded">
+                                        <span>{item.qty}</span>
+                                        <button
+                                            className="px-2 py-1 bg-gray-200 rounded"
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                const newQty = item.qty + 1;
+
+                                                if (newQty > item.stok) {
+                                                    showSwal();
+                                                } else {
+                                                    const updatedItems =
+                                                        updateQtyInLocalStorage(
+                                                            item.id,
+                                                            newQty
+                                                        );
+                                                    setCardItems(updatedItems);
+                                                }
+                                            }}
+                                        >
                                             +
                                         </button>
                                         <button
@@ -105,7 +144,7 @@ export default function CartMobile({
                                             {numeral(
                                                 cardItems.reduce(
                                                     (total, item) =>
-                                                        total + item.harga,
+                                                        total + item.ttl_rp,
                                                     0
                                                 )
                                             ).format("0,0")}

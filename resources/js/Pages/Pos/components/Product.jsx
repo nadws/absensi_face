@@ -21,7 +21,7 @@ export default function Product({
                             : "bg-white"
                     }`}
                     onClick={(event) => {
-                        event.preventDefault(); // Menghentikan penyebaran event
+                        event.preventDefault();
                         {
                             item.stok === 0
                                 ? ""
@@ -29,7 +29,20 @@ export default function Product({
                                       (cardItem) => cardItem.id === item.id
                                   )
                                 ? removeFromCards(item)
-                                : handleCartClick(item, event);
+                                : handleCartClick(
+                                      [
+                                          {
+                                              id: item.id,
+                                              nama_produk: item.nama_produk,
+                                              harga: item.harga,
+                                              foto: item.foto,
+                                              stok: item.stok,
+                                              ttl_rp: item.harga,
+                                              qty: 1,
+                                          },
+                                      ],
+                                      event
+                                  );
                         }
                     }}
                 >

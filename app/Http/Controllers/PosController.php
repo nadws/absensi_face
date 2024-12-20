@@ -81,6 +81,8 @@ class PosController extends Controller
     public function save_payment(Request $request)
     {
 
+
+
         $urutan = DB::selectOne("SELECT MAX(urutan) as urutan FROM invoice");
         if (empty($urutan->urutan)) {
             $no_invoice = 'INV-1001';
@@ -89,22 +91,23 @@ class PosController extends Controller
             $no_invoice = 'INV-' . ($urutan->urutan + 1);
             $urutan = $urutan->urutan + 1;
         }
+
+        $produk = $request->produk;
         $ttl_rp = 0;
-        for ($i = 0; $i < count($request->id_produk); $i++) {
-            $produk = DB::table('produks')->where('id', $request->id_produk[$i])->first();
+        foreach ($produk as $k) {
             $data = [
-                'id_produk' => $request->id_produk[$i],
+                'id_produk' => $k['id'],
                 'no_invoice' => $no_invoice,
                 'qty_debit' => 0,
-                'qty_kredit' => 1,
-                'ttl_rp' => $produk->harga,
+                'qty_kredit' => $k['qty'],
+                'ttl_rp' => $k['ttl_rp'],
                 'status' => 'keluar',
                 'admin' => auth()->user()->name,
                 'created_at' => now(),
                 'created_at' => now(),
             ];
             DB::table('stok_produk')->insert($data);
-            $ttl_rp += $produk->harga;
+            $ttl_rp += $k['ttl_rp'];
         }
         $data_invoice = [
             'tgl_invoice' => now(),
@@ -116,6 +119,22 @@ class PosController extends Controller
             'created_at' => now(),
         ];
         DB::table('invoice')->insert($data_invoice);
+
+        $nominal =  $request->nominal;
+
+        foreach ($nominal as $k) {
+            if ($k['nominal'] == null) {
+            } else {
+                $data_payment = [
+                    'no_invoice' => $no_invoice,
+                    'akun_pembayaran_id' => $k['id_akun'],
+                    'payment_date' => now(),
+                    'ttl_rp' => $k['nominal'],
+                    'created_at' => now(),
+                ];
+                DB::table('payments')->insert($data_payment);
+            }
+        }
         return redirect()->route('pos')->with('success', 'Pembayaran Berhasil');
     }
 }
