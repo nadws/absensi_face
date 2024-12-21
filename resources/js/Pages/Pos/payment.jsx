@@ -10,13 +10,15 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import PaymentMobile from "@/Pages/pos/components/PaymentMobile";
+import ModalSuccess from "@/Components/ModalSuccess";
 
-export default function payment({ no_invoice, kategori, akun }) {
+export default function payment({ no_invoice, kategori, akun, success }) {
     const [cardItems, setCardItems] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenValue, setIsOpenValue] = useState(1);
     const [totalPembayaran, setTotalPembayaran] = useState(0);
     const [totalTagihan, setTotalTaginah] = useState(0);
+    const [inputValues, setInputValues] = useState({});
 
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
@@ -51,7 +53,7 @@ export default function payment({ no_invoice, kategori, akun }) {
             preserveScroll: true,
 
             onSuccess: () => {
-                alert("Pembayaran berhasil");
+                // alert("Pembayaran berhasil");
                 localStorage.removeItem("cardItems");
             },
             onError: (errors) => {
@@ -101,6 +103,39 @@ export default function payment({ no_invoice, kategori, akun }) {
                 totalPembayaran, // Simpan total pembayaran di state
             };
         });
+        setInputValues((prev) => ({
+            ...prev,
+            [id]: value,
+        }));
+    };
+    const handleCopyToInput = (id) => {
+        // Gunakan nilai totalTagihan sebagai nominal
+        setData((prevData) => {
+            const updatedNominal = prevData.nominal.map((item) =>
+                item.id_akun === id
+                    ? { ...item, nominal: parseFloat(totalTagihan) || 0 }
+                    : item
+            );
+
+            // Hitung ulang total pembayaran
+            const totalPembayaran = updatedNominal.reduce(
+                (total, item) => total + item.nominal,
+                0
+            );
+            setTotalPembayaran(totalPembayaran);
+
+            return {
+                ...prevData,
+                nominal: updatedNominal,
+                totalPembayaran, // Simpan total pembayaran di state
+            };
+        });
+
+        // Perbarui inputValues untuk sinkronisasi dengan UI
+        setInputValues((prev) => ({
+            ...prev,
+            [id]: totalTagihan.toString(), // Pastikan formatnya string agar cocok dengan input field
+        }));
     };
 
     return (
@@ -193,7 +228,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                     {akun.map((item) => (
                         <div
                             key={item.id}
-                            className={`w-full ${
+                            className={` relative w-full ${
                                 isOpenValue === item.kategori_akun_id
                                     ? ""
                                     : "hidden"
@@ -202,12 +237,21 @@ export default function payment({ no_invoice, kategori, akun }) {
                             <TextInput
                                 type="number"
                                 id="nominal"
-                                className="w-full rounded-lg h-11 "
+                                className="w-full rounded-lg h-11 pr-8"
                                 placeholder={item.akun}
+                                value={inputValues[item.id] || ""}
                                 onChange={(e) =>
                                     handleNominalChange(item.id, e.target.value)
                                 }
                             />
+                            <a
+                                className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                                onClick={(e) =>
+                                    handleCopyToInput(item.id, e.target.value)
+                                }
+                            >
+                                <i className="fa-regular fa-copy"></i>
+                            </a>
                         </div>
                     ))}
                 </div>
@@ -220,7 +264,7 @@ export default function payment({ no_invoice, kategori, akun }) {
                         disabled={totalTagihan > totalPembayaran || processing}
                         submitProcessing={processing}
                     >
-                        Pay Now
+                        Pay Now {success}
                     </PrimaryButton>
                 </div>
             </div>
@@ -228,7 +272,14 @@ export default function payment({ no_invoice, kategori, akun }) {
                 cardItems={cardItems}
                 numeral={numeral}
                 totalTagihan={totalTagihan}
+                totalPembayaran={totalPembayaran}
+                kategori={kategori}
+                akun={akun}
+                handleNominalChange={handleNominalChange}
+                handleCopyToInput={handleCopyToInput}
+                inputValues={inputValues}
             />
+            <ModalSuccess isOpen={success == 1 ? true : false} />
         </form>
     );
 }

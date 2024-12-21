@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('no_invoice');
             $table->date('tgl_invoice');
             $table->double('ttl_rp');
+            $table->double('kembalian');
             $table->string('admin', 50);
             $table->integer('urutan');
             $table->timestamps();

@@ -74,13 +74,13 @@ class PosController extends Controller
         return Inertia::render('Pos/payment', [
             'no_invoice' => $no_invoice,
             'kategori' => DB::table('kategori_pembayaran')->get(),
-            'akun' => DB::table('akun_pembayaran')->get()
+            'akun' => DB::table('akun_pembayaran')->get(),
+            'success' => $request->success
         ]);
     }
 
     public function save_payment(Request $request)
     {
-
 
 
         $urutan = DB::selectOne("SELECT MAX(urutan) as urutan FROM invoice");
@@ -113,6 +113,7 @@ class PosController extends Controller
             'tgl_invoice' => now(),
             'no_invoice' => $no_invoice,
             'ttl_rp' => $ttl_rp,
+            'kembalian' => $request->totalPembayaran - $ttl_rp,
             'admin' => auth()->user()->name,
             'urutan' => $urutan,
             'created_at' => now(),
@@ -135,6 +136,6 @@ class PosController extends Controller
                 DB::table('payments')->insert($data_payment);
             }
         }
-        return redirect()->route('pos')->with('success', 'Pembayaran Berhasil');
+        return redirect()->route('pos.payment', ['success' => true])->with('success', 'Pembayaran Berhasil');
     }
 }
