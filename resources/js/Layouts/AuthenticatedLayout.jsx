@@ -10,7 +10,7 @@ export default function Authenticated({ user, header, children }) {
         useState(false);
 
     const menu = (role) => {
-        if (role === "admin") {
+        if (role === "superadmin") {
             return [
                 {
                     name: "Dashboard",
@@ -21,6 +21,19 @@ export default function Authenticated({ user, header, children }) {
                     name: "Users",
                     href: route("users"),
                     current: route().current("users"),
+                },
+                {
+                    name: "Pos",
+                    href: route("pos"),
+                    current: route().current("pos"),
+                },
+            ];
+        } else if (role === "admin") {
+            return [
+                {
+                    name: "Dashboard",
+                    href: route("dashboard"),
+                    current: route().current("dashboard"),
                 },
                 {
                     name: "Pos",
