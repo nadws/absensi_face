@@ -16,7 +16,7 @@ class AdminRole
     public function handle(Request $request, Closure $next): Response
     {
 
-        if ($request->user()->role != 'admin') {
+        if ($request->user()->role != 'superadmin') {
             abort(403);
         }
         return $next($request);
