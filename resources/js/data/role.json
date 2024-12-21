@@ -1,5 +1,9 @@
 [
     {
+        "value": "superadmin",
+        "label": "Super Admin"
+    },
+    {
         "value": "admin",
         "label": "Admin"
     },
