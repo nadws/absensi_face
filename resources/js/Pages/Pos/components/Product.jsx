@@ -80,7 +80,7 @@ export default function Product({
                         </span>
                     </div>
                     {item.stok === 0 && (
-                        <span className="absolute font-mona inset-0 font-bold flex items-center justify-center text-5xl  text-red-500   transform rotate-45">
+                        <span className="absolute  font-mona ml-10 mt-14 font-bold flex items-center justify-center text-5xl  text-red-500   transform rotate-45">
                             Habis
                         </span>
                     )}
