@@ -124,6 +124,7 @@ export default function PaymentMobile({
                                         <h5>{item2.akun}</h5>
                                         <TextInput
                                             type="number"
+                                            autocomplete="off"
                                             id={`nominal-${item2.id}`}
                                             className="w-60 rounded-lg h-10 float-end pr-8"
                                             placeholder={item2.akun}

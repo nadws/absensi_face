@@ -11,7 +11,7 @@ export default function Product({
             {data.produk.data.map((item) => (
                 <div
                     key={item.id}
-                    className={`shadow-md sm:rounded-lg cursor-pointer flex flex-col h-full relative z-10  ${
+                    className={`shadow-md rounded-lg cursor-pointer flex flex-col h-full relative z-10  ${
                         item.stok === 0
                             ? "bg-slate-300  shadow-xl"
                             : cardItems.some(

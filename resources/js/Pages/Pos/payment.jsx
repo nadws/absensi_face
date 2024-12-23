@@ -240,6 +240,7 @@ export default function payment({ no_invoice, kategori, akun, success }) {
                                 className="w-full rounded-lg h-11 pr-8"
                                 placeholder={item.akun}
                                 value={inputValues[item.id] || ""}
+                                autocomplete="off"
                                 onChange={(e) =>
                                     handleNominalChange(item.id, e.target.value)
                                 }
