@@ -83,7 +83,7 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
                                         {filePreview === null ? (
                                             <div className="mt-4">
                                                 <img
-                                                    src="/image/image.png"
+                                                    src="/storage/image/image.png"
                                                     alt="Preview"
                                                     className="w-32 h-32 mb-4 object-cover rounded"
                                                 />

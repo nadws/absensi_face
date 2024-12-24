@@ -83,7 +83,7 @@ class ProductController extends Controller
             $fileName = "image.png";
         } else {
             $fileName = $kd_produk . '_' . $request->file('foto')->getClientOriginalName();
-            $request->file('foto')->move(public_path('image'), $fileName);
+            $request->file('foto')->storeAs('public/image', $fileName);
         }
 
         $product = Product::create([
@@ -95,7 +95,7 @@ class ProductController extends Controller
             'stok' => $request->stok,
             'admin_id' => auth()->user()->name,
             'satuan_id' => 1,
-            'foto' => $fileName
+            'foto' => asset('storage/image/' . $fileName),
         ]);
         $productId = $product->id;
 

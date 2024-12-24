@@ -11,7 +11,7 @@ export default function UserIndex({ auth, produk, filters }) {
     const [selectedImage, setSelectedImage] = useState(null); // Menyimpan gambar yang dipilih
 
     const handleImageError = (event) => {
-        event.target.src = "/image/placeholder.png"; // Gambar placeholder jika error
+        event.target.src = "/storage/image/placeholder.png"; // Gambar placeholder jika error
     };
 
     const openModal = (foto) => {
@@ -106,13 +106,10 @@ export default function UserIndex({ auth, produk, filters }) {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <img
-                                                src={`/image/${foto}`}
+                                                src={foto}
                                                 className="w-10 h-10 rounded-lg"
                                                 alt=""
-                                                onError={(e) =>
-                                                    (e.target.src =
-                                                        "/image/placeholder.png")
-                                                }
+                                                onError={handleImageError}
                                             />
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
