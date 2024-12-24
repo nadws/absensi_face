@@ -21,7 +21,7 @@ class PosController extends Controller
                 ->selectRaw('
                     a.id,
                     a.nama_produk,
-                    (COALESCE(a.stok, 0) + COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok,
+                    ( COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok,
                     a.harga, a.foto
                 ')
                 ->leftJoin(DB::raw('(
@@ -35,7 +35,7 @@ class PosController extends Controller
                 ->selectRaw('
                     a.id,
                     a.nama_produk,
-                    (COALESCE(a.stok, 0) + COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok,
+                    ( COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok,
                     a.harga, a.foto
                 ')
                 ->leftJoin(DB::raw('(

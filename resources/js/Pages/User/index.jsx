@@ -3,6 +3,7 @@ import { Link, useForm } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import SearchTable from "@/Components/SearchTable";
+import Table from "@/Components/Table";
 
 export default function UserIndex({ auth, users, filters }) {
     return (
@@ -37,61 +38,46 @@ export default function UserIndex({ auth, users, filters }) {
                                 routes="users"
                                 paging="Y"
                             />
-                            <table className="min-w-full mt-4">
-                                <thead>
-                                    <tr className="border-b-2 border-t-2">
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            #
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            Name
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            Email
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            Role
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {users.data.map(
-                                        ({ id, name, email, role }, index) => (
-                                            <tr key={id} className="border-b">
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {(users.current_page - 1) *
-                                                        users.per_page +
-                                                        index +
-                                                        1}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {name}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {email}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {role}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <Link
-                                                        className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                                        href={route(
-                                                            "users.edit",
-                                                            id
-                                                        )}
-                                                    >
-                                                        <i className="fa-solid fa-pen-to-square"></i>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    )}
-                                </tbody>
-                            </table>
+                            <Table
+                                columns={[
+                                    "#",
+                                    "Name",
+                                    "Email",
+                                    "Role",
+                                    "Action",
+                                ]}
+                                rows={users.data}
+                                renderRow={(
+                                    { id, name, email, role },
+                                    index
+                                ) => (
+                                    <>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {(users.current_page - 1) *
+                                                users.per_page +
+                                                index +
+                                                1}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {name}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {email}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {role}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <Link
+                                                className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                                href={route("users.edit", id)}
+                                            >
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </Link>
+                                        </td>
+                                    </>
+                                )}
+                            />
                             <Pagination
                                 links={users.links}
                                 searchQuery={filters.search}

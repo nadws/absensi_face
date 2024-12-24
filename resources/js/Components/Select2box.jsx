@@ -5,6 +5,7 @@ export default function SelectBox({
     className = "",
     onChange,
     currentValue, // Menambahkan currentValue untuk menampilkan nilai yang sudah dipilih
+    placeholder = "Pilih salah satu...",
     ...props
 }) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -58,7 +59,7 @@ export default function SelectBox({
                 value={selectedOption ? selectedOption.label : searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={handleFocus}
-                placeholder="Cari status..."
+                placeholder={placeholder}
                 className={
                     "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1  " +
                     className
@@ -66,7 +67,7 @@ export default function SelectBox({
                 {...props}
             />
             {isDropdownOpen && (
-                <ul className="absolute  mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-y-scroll max-h-48 ">
+                <ul className="absolute  mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-y-scroll max-h-48 z-50">
                     {(searchTerm === "" ? options : filteredOptions).map(
                         (option, index) => (
                             <li

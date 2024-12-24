@@ -23,6 +23,11 @@ export default function Authenticated({ user, header, children }) {
                     current: route().current("users"),
                 },
                 {
+                    name: "Products",
+                    href: route("products"),
+                    current: route().current("products"),
+                },
+                {
                     name: "Pos",
                     href: route("pos"),
                     current: route().current("pos"),
