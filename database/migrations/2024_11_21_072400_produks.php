@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('admin')->nullable();
             $table->double('harga_beli')->nullable();
+            $table->double('stok')->nullable();
             $table->integer('satuan_id');
             $table->integer('pemilik_id');
 
