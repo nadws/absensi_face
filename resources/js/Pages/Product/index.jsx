@@ -11,7 +11,7 @@ export default function UserIndex({ auth, produk, filters }) {
     const [selectedImage, setSelectedImage] = useState(null); // Menyimpan gambar yang dipilih
 
     const handleImageError = (event) => {
-        event.target.src = "/storage/image/placeholder.png"; // Gambar placeholder jika error
+        event.target.src = "/storage/image/image.png"; // Gambar placeholder jika error
     };
 
     const openModal = (foto) => {
