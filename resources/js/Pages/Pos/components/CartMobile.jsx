@@ -49,7 +49,7 @@ export default function CartMobile({
                                     key={item.id}
                                 >
                                     <img
-                                        src={`/image/${item.foto}`}
+                                        src={item.foto}
                                         alt="Product Image"
                                         className="w-10 h-10 object-cover rounded"
                                         onError={handleImageError}

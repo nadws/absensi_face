@@ -63,7 +63,7 @@ export default function Pos({ auth, data, filters }) {
     };
     const handleImageError = (e) => {
         e.target.onerror = null;
-        e.target.src = "/image/image.png";
+        e.target.src = "/storage/image/image.png";
     };
 
     useEffect(() => {

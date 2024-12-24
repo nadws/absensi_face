@@ -47,7 +47,7 @@ export default function Product({
                     }}
                 >
                     <img
-                        src={`/image/${item.foto}`}
+                        src={item.foto}
                         alt={`Image for ${item.nama_produk}`}
                         className={`w-full lg:h-32 h-28 object-cover p-3 rounded  ${
                             item.stok === 0 ? "blur-sm" : ""
