@@ -158,7 +158,7 @@ export default function payment({ no_invoice, kategori, akun, success }) {
                             key={item.id}
                         >
                             <img
-                                src={`/storage/image/${item.foto}`}
+                                src={item.foto}
                                 alt="Product Image"
                                 className="w-20 h-20 object-cover rounded"
                                 onError={handleImageError}
