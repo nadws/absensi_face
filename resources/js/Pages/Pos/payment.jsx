@@ -74,7 +74,7 @@ export default function payment({ no_invoice, kategori, akun, success }) {
 
     const handleImageError = (e) => {
         e.target.onerror = null;
-        e.target.src = "/image/image.png";
+        e.target.src = "/storage/image/image.png";
     };
     const toggleSidebar = (item) => {
         setIsOpen(!isOpen);
@@ -158,7 +158,7 @@ export default function payment({ no_invoice, kategori, akun, success }) {
                             key={item.id}
                         >
                             <img
-                                src={`/image/${item.foto}`}
+                                src={`/storage/image/${item.foto}`}
                                 alt="Product Image"
                                 className="w-20 h-20 object-cover rounded"
                                 onError={handleImageError}
