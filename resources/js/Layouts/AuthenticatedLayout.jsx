@@ -4,6 +4,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -16,21 +17,31 @@ export default function Authenticated({ user, header, children }) {
                     name: "Dashboard",
                     href: route("dashboard"),
                     current: route().current("dashboard"),
+                    icon: "fa-gauge",
                 },
                 {
                     name: "Users",
                     href: route("users"),
                     current: route().current("users"),
+                    icon: "fa-users",
                 },
                 {
                     name: "Products",
                     href: route("products"),
                     current: route().current("products"),
+                    icon: "fa-box",
+                },
+                {
+                    name: "Stok Opname",
+                    href: route("stokopname"),
+                    current: route().current("stokopname"),
+                    icon: "fa-cubes-stacked",
                 },
                 {
                     name: "Pos",
                     href: route("pos"),
                     current: route().current("pos"),
+                    icon: "fa-store",
                 },
             ];
         } else if (role === "admin") {
@@ -39,11 +50,13 @@ export default function Authenticated({ user, header, children }) {
                     name: "Dashboard",
                     href: route("dashboard"),
                     current: route().current("dashboard"),
+                    icon: "fa-gauge",
                 },
                 {
                     name: "Pos",
                     href: route("pos"),
                     current: route().current("pos"),
+                    icon: "fa-store",
                 },
             ];
         } else {
@@ -52,6 +65,7 @@ export default function Authenticated({ user, header, children }) {
                     name: "Dashboard",
                     href: route("dashboard"),
                     current: route().current("dashboard"),
+                    icon: "fa-gauge",
                 },
             ];
         }
@@ -75,6 +89,7 @@ export default function Authenticated({ user, header, children }) {
                                             key={index}
                                             href={item.href}
                                             active={item.current}
+                                            icon={item.icon}
                                         >
                                             {item.name}
                                         </NavLink>

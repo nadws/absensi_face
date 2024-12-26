@@ -3,7 +3,13 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import SearchTable from "@/Components/SearchTable";
 import Pagination from "@/Components/Pagination";
-export default function stokopname({ auth, invoicestok, filters }) {
+import numeral from "numeral";
+import TextInput from "@/Components/TextInput";
+
+export default function viewopname({ auth, produk }) {
+    const handleImageError = (event) => {
+        event.target.src = "/storage/image/image.png"; // Gambar placeholder jika error
+    };
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -19,61 +25,64 @@ export default function stokopname({ auth, invoicestok, filters }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-2">
                         <label className="font-bold">Stok Opname</label>
-                        <Link
-                            href={route("stokopname.viewOpname")}
-                            className="bg-[#F46700] hover:bg-[#f8c19a] text-white font-bold py-2 px-4 rounded"
-                        >
-                            <i className="fa-solid fa-plus"></i> Create Opname
-                        </Link>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm">
                         <div className="p-6 text-gray-900">
-                            <SearchTable
-                                filters={filters}
-                                routes="stokopname"
-                                paging="Y"
-                            />
                             <Table
                                 columns={[
                                     "#",
-                                    "Tanggal",
-                                    "Invoice",
-                                    "Status",
-                                    "Action",
+                                    "Kode Produk",
+                                    "Nama Produk",
+                                    "Kategori",
+                                    "Stok",
+                                    "Stok Aktual",
+                                    "Harga Beli",
+                                    "Harga Jual",
                                 ]}
-                                rows={invoicestok.data}
+                                rows={produk.data}
                                 renderRow={(
-                                    { id, opname_date, status },
+                                    {
+                                        id,
+                                        kd_produk,
+                                        nama_produk,
+                                        pemilik,
+                                        stok_akhir,
+                                        harga_beli,
+                                        harga,
+                                        foto,
+                                    },
                                     index
                                 ) => (
                                     <>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            {(invoicestok.current_page - 1) *
+                                            {(produk.current_page - 1) *
                                                 produk.per_page +
                                                 index +
                                                 1}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            {opname_date}
+                                            {kd_produk}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            {status}
+                                            {nama_produk}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <a
-                                                className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                                href={`/users/edit/${id}`}
-                                            >
-                                                <i className="fa-solid fa-pen-to-square"></i>
-                                            </a>
+                                            {pemilik}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {stok_akhir}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <TextInput type="number" />
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {numeral(harga_beli).format("0,0")}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {numeral(harga).format("0,0")}
                                         </td>
                                     </>
                                 )}
-                            />
-                            <Pagination
-                                links={invoicestok.links}
-                                searchQuery={filters.search}
-                                paginate={filters.paginate}
                             />
                         </div>
                     </div>

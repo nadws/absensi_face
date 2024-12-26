@@ -3,6 +3,7 @@
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StokOpnameController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SuperAdminRole;
 use Illuminate\Foundation\Application;
@@ -45,6 +46,10 @@ Route::middleware('auth', SuperAdminRole::class)->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
+});
+Route::middleware('auth', SuperAdminRole::class)->group(function () {
+    Route::get('/stokopname', [StokOpnameController::class, 'index'])->name('stokopname');
+    Route::get('/stokopname/viewOpname', [StokOpnameController::class, 'viewOpname'])->name('stokopname.viewOpname');
 });
 
 require __DIR__ . '/auth.php';

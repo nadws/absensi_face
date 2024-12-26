@@ -7,7 +7,7 @@ import SearchTable from "@/Components/SearchTable";
 import numeral from "numeral";
 import Table from "@/Components/Table";
 
-export default function UserIndex({ auth, produk, filters }) {
+export default function Product({ auth, produk, filters }) {
     const [selectedImage, setSelectedImage] = useState(null); // Menyimpan gambar yang dipilih
 
     const handleImageError = (event) => {
@@ -110,6 +110,7 @@ export default function UserIndex({ auth, produk, filters }) {
                                                 className="w-10 h-10 rounded-lg"
                                                 alt=""
                                                 onError={handleImageError}
+                                                onClick={() => openModal(foto)}
                                             />
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -139,7 +140,7 @@ export default function UserIndex({ auth, produk, filters }) {
                                     onClick={(e) => e.stopPropagation()} // Mencegah modal tertutup saat modal diklik
                                 >
                                     <img
-                                        src={`/image/${selectedImage}`}
+                                        src={selectedImage}
                                         alt="Detail"
                                         className="w-auto h-96"
                                         onError={handleImageError}

@@ -16,11 +16,29 @@ export default function Table({ columns, rows, renderRow }) {
                 </tr>
             </thead>
             <tbody>
-                {rows.map((row, index) => (
-                    <tr key={index} className="border-b">
-                        {renderRow(row, index)}
+                {rows.length > 0 ? (
+                    rows.map((row, index) => (
+                        <tr key={index} className="border-b">
+                            {renderRow(row, index)}
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td
+                            colSpan="100%"
+                            className="text-center py-4 border-b "
+                        >
+                            <center>
+                                <img
+                                    src="/logo/file.png"
+                                    alt=""
+                                    className="w-20 "
+                                />
+                            </center>
+                            data kosong ?
+                        </td>
                     </tr>
-                ))}
+                )}
             </tbody>
         </table>
     );
