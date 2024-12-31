@@ -12,7 +12,7 @@ export default function Product({
                 <div
                     key={item.id}
                     className={`shadow-md rounded-lg cursor-pointer flex flex-col h-full relative z-10  ${
-                        item.stok === 0
+                        item.stok === 0 && item.opname === "Y"
                             ? "bg-slate-300  shadow-xl"
                             : cardItems.some(
                                   (cardItem) => cardItem.id === item.id
@@ -23,7 +23,7 @@ export default function Product({
                     onClick={(event) => {
                         event.preventDefault();
                         {
-                            item.stok === 0
+                            item.stok === 0 && item.opname === "Y"
                                 ? ""
                                 : cardItems.some(
                                       (cardItem) => cardItem.id === item.id
@@ -39,6 +39,7 @@ export default function Product({
                                               stok: item.stok,
                                               ttl_rp: item.harga,
                                               qty: 1,
+                                              opname: item.opname,
                                           },
                                       ],
                                       event
@@ -50,7 +51,9 @@ export default function Product({
                         src={item.foto}
                         alt={`Image for ${item.nama_produk}`}
                         className={`w-full lg:h-32 h-28 object-cover p-3 rounded  ${
-                            item.stok === 0 ? "blur-sm" : ""
+                            item.stok === 0 && item.opname === "Y"
+                                ? "blur-sm"
+                                : ""
                         } `}
                         onError={handleImageError}
                     />
@@ -58,7 +61,9 @@ export default function Product({
                     <div className="p-6 mb-4">
                         <span
                             className={`font-normal  font-mona ${
-                                item.stok === 0 ? "text-slate-400" : ""
+                                item.stok === 0 && item.opname === "Y"
+                                    ? "text-slate-400"
+                                    : ""
                             }`}
                         >
                             {item.nama_produk}
@@ -67,7 +72,7 @@ export default function Product({
 
                         <span
                             className={`font-mona ${
-                                item.stok === 0
+                                item.stok === 0 && item.opname === "Y"
                                     ? "text-[#fcba8b] font-bold"
                                     : cardItems.some(
                                           (cardItem) => cardItem.id === item.id
@@ -79,17 +84,24 @@ export default function Product({
                             Rp. {numeral(item.harga).format("0,0")}
                         </span>
                     </div>
-                    {item.stok === 0 && (
+                    {item.stok === 0 && item.opname === "Y" && (
                         <span className="absolute  font-mona lg:ml-10 ml-5 mt-14 font-bold flex items-center justify-center text-5xl  text-red-500   transform rotate-45">
                             Habis
                         </span>
                     )}
                     <span
                         className={`font-mona italic mt-2 absolute bottom-2 right-2 ${
-                            item.stok === 0 ? "text-slate-400" : ""
+                            item.stok === 0 && item.opname === "Y"
+                                ? "text-slate-400"
+                                : ""
                         }`}
                     >
-                        Stock: {item.stok}
+                        Stock:{" "}
+                        {item.opname === "Y" ? (
+                            item.stok
+                        ) : (
+                            <i className="fas fa-infinity"></i>
+                        )}
                     </span>
                 </div>
             ))}

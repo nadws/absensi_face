@@ -62,6 +62,7 @@ export default function Product({ auth, produk, filters }) {
                                     "Stok",
                                     "Harga Beli",
                                     "Harga Jual",
+                                    "Opname",
                                     "Foto",
                                     "Action",
                                 ]}
@@ -75,6 +76,7 @@ export default function Product({ auth, produk, filters }) {
                                         stok_akhir,
                                         harga_beli,
                                         harga,
+                                        opname,
                                         foto,
                                     },
                                     index
@@ -96,13 +98,20 @@ export default function Product({ auth, produk, filters }) {
                                             {pemilik}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            {stok_akhir}
+                                            {opname === "Y" ? (
+                                                stok_akhir
+                                            ) : (
+                                                <i className="fas fa-infinity"></i>
+                                            )}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {numeral(harga_beli).format("0,0")}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {numeral(harga).format("0,0")}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {opname == "Y" ? "Ya" : "Tidak"}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <img

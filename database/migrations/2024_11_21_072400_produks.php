@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('harga_beli')->nullable();
             $table->double('stok')->nullable();
             $table->integer('satuan_id');
+            $table->enum('opname', ['Y', 'N'])->nullable();
             $table->integer('pemilik_id');
 
             $table->timestamps();

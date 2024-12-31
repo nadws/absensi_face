@@ -21,5 +21,6 @@ class Product extends Model
         'harga_beli',
         'pemilik_id',
         'satuan_id',
+        'opname',
     ];
 }

@@ -93,7 +93,10 @@ export default function CartMobile({
                                                 event.preventDefault();
                                                 const newQty = item.qty + 1;
 
-                                                if (newQty > item.stok) {
+                                                if (
+                                                    newQty > item.stok &&
+                                                    item.opname === "Y"
+                                                ) {
                                                     showSwal();
                                                 } else {
                                                     const updatedItems =

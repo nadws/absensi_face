@@ -10,8 +10,10 @@ import { Transition } from "@headlessui/react";
 import Select2Box from "@/Components/Select2box";
 // import kategori from "@/data/kategori.json";
 import SecondaryButton from "@/Components/SecondaryButton";
+import Toggle from "@/Components/Toggle";
 
 export default function UserCreate({ auth, kd_produk, kategori }) {
+    const [isOn, setIsOn] = useState("N");
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             nama_produk: "",
@@ -19,7 +21,8 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
             kategori: "",
             harga: "",
             harga_beli: "",
-            stok: "",
+            stok: 0,
+            opname: "",
             foto: "image.png",
         });
 
@@ -45,12 +48,21 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
             setData("foto", file); // Buat URL sementara
         }
     };
+
+    const handleToggle = () => {
+        const newIsOn = isOn === "N" ? "Y" : "N"; // Tentukan nilai baru isOn
+        setIsOn(newIsOn); // Perbarui isOn
+        setData("stok", newIsOn === "N" ? "0" : data.stok); // Perbarui stok berdasarkan nilai baru
+        setData("opname", newIsOn); // Gunakan nilai baru untuk opname
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Create
+                    {isOn}
                 </h2>
             }
         >
@@ -58,7 +70,7 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
 
             <div className="py-12 w-full ">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm h-screen">
+                    <div className="bg-white overflow-hidden shadow-sm h-full">
                         <div className="p-6 text-gray-900">
                             <section className="">
                                 <header>
@@ -236,8 +248,23 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
                                             message={errors.kategori}
                                         />
                                     </div>
-
                                     <div>
+                                        <InputLabel
+                                            htmlFor="opname"
+                                            value="Opname"
+                                        />
+
+                                        <Toggle
+                                            isOn={isOn}
+                                            handleToggle={handleToggle}
+                                        />
+                                    </div>
+
+                                    <div
+                                        className={`${
+                                            isOn === "Y" ? "" : "hidden"
+                                        }`}
+                                    >
                                         <InputLabel
                                             htmlFor="stok"
                                             value="Stok"

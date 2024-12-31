@@ -21,6 +21,7 @@ class PosController extends Controller
                 ->selectRaw('
                     a.id,
                     a.nama_produk,
+                    a.opname,
                     ( COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok,
                     a.harga, a.foto
                 ')
@@ -35,6 +36,7 @@ class PosController extends Controller
                 ->selectRaw('
                     a.id,
                     a.nama_produk,
+                    a.opname,
                     ( COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok,
                     a.harga, a.foto
                 ')
@@ -47,6 +49,8 @@ class PosController extends Controller
                 ->where('pemilik_id', $kategori)
                 ->paginate(8);
         }
+
+
 
         return Inertia::render('Pos/index', [
             'data' => [

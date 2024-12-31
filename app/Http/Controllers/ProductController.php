@@ -86,6 +86,8 @@ class ProductController extends Controller
             $request->file('foto')->storeAs('public/image', $fileName);
         }
 
+
+
         $product = Product::create([
             'kd_produk' => $kd_produk,
             'nama_produk' => $request->nama_produk,
@@ -96,6 +98,7 @@ class ProductController extends Controller
             'admin_id' => auth()->user()->name,
             'satuan_id' => 1,
             'foto' => asset('storage/image/' . $fileName),
+            'opname' => $request->opname,
         ]);
         $productId = $product->id;
 
