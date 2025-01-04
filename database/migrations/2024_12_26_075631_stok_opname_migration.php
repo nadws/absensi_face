@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stok_opname', function (Blueprint $table) {
-            $table->bigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->string('no_invoice');
             $table->date('opname_date');
             $table->double('status');

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stok_produk', function (Blueprint $table) {
-            $table->integer('id')->primary()->primary()->autoIncrement();
+            $table->id();
             $table->integer('id_produk');
             $table->string('no_invoice', 150);
             $table->double('qty_debit');
