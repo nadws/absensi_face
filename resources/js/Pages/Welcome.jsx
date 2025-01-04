@@ -18,7 +18,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     useEffect(() => {
         const fetchWeather = async () => {
             try {
-                const response = await fetch(`https://wttr.in?format=%t+%C+%l`);
+                const response = await fetch(`https://wttr.in/?format=3`);
                 const data = await response.text();
                 setWeather(data);
             } catch (err) {
