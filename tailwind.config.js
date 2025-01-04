@@ -15,6 +15,7 @@ export default {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
                 mona: ['"Mona Sans"', "sans-serif"],
+                poppins: ['"Poppins"', "sans-serif"],
             },
         },
     },
