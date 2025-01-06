@@ -1,0 +1,70 @@
+{
+    "superadmin": [
+        {
+            "name": "Dashboard",
+            "href": "route('dashboard')",
+            "current": "route().current('dashboard')",
+            "icon": "fa-gauge",
+            "kat": "tunggal"
+        },
+        {
+            "name": "Users",
+            "href": "route('users')",
+            "current": "route().current('users')",
+            "icon": "fa-users",
+            "kat": "tunggal"
+        },
+        {
+            "name": "Management Products",
+            "icon": "fa-box",
+            "kat": "ganda",
+            
+            "isi": [
+                {
+                    "subname": "Products",
+                    "href": "route('products')",
+                    "current": "route().current('products')"
+                    
+                },
+                {
+                    "subname": "Stok Opname",
+                    "href": "route('stokopname')",
+                    "current": "route().current('stokopname')"
+                }
+            ]
+        },
+        {
+            "name": "Pos",
+            "href": "route('pos')",
+            "current": "route().current('pos')",
+            "icon": "fa-store",
+            "kat": "tunggal"
+        }
+        
+    ],
+    "admin": [
+        {
+            "name": "Dashboard",
+            "href": "route('dashboard')",
+            "current": "route().current('dashboard')",
+            "icon": "fa-gauge",
+            "kat": "tunggal"
+        },
+        {
+            "name": "Pos",
+            "href": "route('pos')",
+            "current": "route().current('pos')",
+            "icon": "fa-store",
+            "kat": "tunggal"
+        }
+    ],
+    "user": [
+        {
+            "name": "Dashboard",
+            "href": "route('dashboard')",
+            "current": "route().current('dashboard')",
+            "icon": "fa-gauge",
+            "kat": "tunggal"
+        }
+    ]
+}

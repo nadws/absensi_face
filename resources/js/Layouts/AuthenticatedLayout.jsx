@@ -5,71 +5,38 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { icon } from "@fortawesome/fontawesome-svg-core";
+import DropdownMaster from "@/Components/DropdownMaster";
+import nav from "@/data/nav.json";
+import React from "react";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     const menu = (role) => {
-        if (role === "superadmin") {
-            return [
-                {
-                    name: "Dashboard",
-                    href: route("dashboard"),
-                    current: route().current("dashboard"),
-                    icon: "fa-gauge",
-                },
-                {
-                    name: "Users",
-                    href: route("users"),
-                    current: route().current("users"),
-                    icon: "fa-users",
-                },
-                {
-                    name: "Products",
-                    href: route("products"),
-                    current: route().current("products"),
-                    icon: "fa-box",
-                },
-                {
-                    name: "Stok Opname",
-                    href: route("stokopname"),
-                    current: route().current("stokopname"),
-                    icon: "fa-cubes-stacked",
-                },
-                {
-                    name: "Pos",
-                    href: route("pos"),
-                    current: route().current("pos"),
-                    icon: "fa-store",
-                },
-            ];
-        } else if (role === "admin") {
-            return [
-                {
-                    name: "Dashboard",
-                    href: route("dashboard"),
-                    current: route().current("dashboard"),
-                    icon: "fa-gauge",
-                },
-                {
-                    name: "Pos",
-                    href: route("pos"),
-                    current: route().current("pos"),
-                    icon: "fa-store",
-                },
-            ];
-        } else {
-            return [
-                {
-                    name: "Dashboard",
-                    href: route("dashboard"),
-                    current: route().current("dashboard"),
-                    icon: "fa-gauge",
-                },
-            ];
-        }
+        if (!nav[role]) return [];
+
+        return nav[role].map((item) => {
+            if (item.kat === "tunggal") {
+                return {
+                    ...item,
+                    href: eval(item.href),
+                    current: eval(item.current),
+                };
+            } else if (item.kat === "ganda" && item.isi) {
+                return {
+                    ...item,
+                    isi: item.isi.map((subitem) => ({
+                        ...subitem,
+                        href: eval(subitem.href),
+                        current: eval(subitem.current),
+                    })),
+                };
+            }
+            return item;
+        });
     };
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -78,21 +45,34 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="block h-14 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 {menu(user.role).map((item, index) => {
                                     return (
-                                        <NavLink
-                                            key={index}
-                                            href={item.href}
-                                            active={item.current}
-                                            icon={item.icon}
-                                        >
-                                            {item.name}
-                                        </NavLink>
+                                        <React.Fragment key={index}>
+                                            {item.kat === "tunggal" ? (
+                                                <NavLink
+                                                    href={item.href}
+                                                    active={item.current}
+                                                    icon={item.icon}
+                                                >
+                                                    {item.name}
+                                                </NavLink>
+                                            ) : (
+                                                <DropdownMaster
+                                                    icon={item.icon}
+                                                    name={item.name}
+                                                    active={item.isi.some(
+                                                        (subitem) =>
+                                                            subitem.current
+                                                    )}
+                                                    isi={item.isi}
+                                                />
+                                            )}
+                                        </React.Fragment>
                                     );
                                 })}
                             </div>

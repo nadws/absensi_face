@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url(https://fonts.bunny.net/css?family=poppins:500,600,700,900);
 /* Custom Scrollbar */
 .thin-scrollbar::-webkit-scrollbar {
     height: 12px; /* Tinggi scrollbar horizontal */
