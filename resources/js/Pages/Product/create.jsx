@@ -11,6 +11,7 @@ import Select2Box from "@/Components/Select2box";
 // import kategori from "@/data/kategori.json";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Toggle from "@/Components/Toggle";
+import SelectBox from "@/Components/Selectbox";
 
 export default function UserCreate({ auth, kd_produk, kategori }) {
     const [isOn, setIsOn] = useState("N");
@@ -232,7 +233,7 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
                                             htmlFor="kategori"
                                             value="Kategori"
                                         />
-                                        <Select2Box
+                                        <SelectBox
                                             onChange={(value) =>
                                                 setData("kategori", value)
                                             }
