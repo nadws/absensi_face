@@ -67,10 +67,6 @@ class ProductController extends Controller
             'harga_beli' => 'required',
             'stok' => 'required',
         ]);
-
-
-
-
         $kode  = DB::selectOne("SELECT max(kd_produk) as kode FROM produks");
         if (empty($kode->kode)) {
             $kd_produk = '1001';

@@ -23,6 +23,11 @@
                     "subname": "Stok Opname",
                     "href": "route('stokopname')",
                     "current": "route().current('stokopname')"
+                },
+                {
+                    "subname": "Stok Masuk",
+                    "href": "route('stokopname')",
+                    "current": "route().current('stokopname')"
                 }
             ]
         },
