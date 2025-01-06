@@ -21,7 +21,7 @@ class ProductController extends Controller
             GROUP BY b.id_produk
         ) as b'), 'b.id_produk', '=', 'produks.id')
             ->selectRaw('produks.* ,pemiliks.pemilik, (COALESCE(b.debit, 0) - COALESCE(b.kredit, 0)) as stok_akhir')
-            ->where('nama_produk', 'like', '%' . $search . '%')->orWhere('kd_produk', 'like', '%' . $search . '%')->orWhere('harga', 'like', '%' . $search . '%')->orderBy('id', 'desc')->paginate($paginate);
+            ->where('nama_produk', 'like', '%' . $search . '%')->orWhere('kd_produk', 'like', '%' . $search . '%')->orWhere('harga', 'like', '%' . $search . '%')->orderBy('id', 'desc')->orWhere('pemiliks.pemilik', 'like', '%' . $search . '%')->paginate($paginate);
 
         return Inertia::render('Product/index', [
             'produk' => $produk,

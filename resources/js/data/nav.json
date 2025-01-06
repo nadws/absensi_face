@@ -7,18 +7,11 @@
             "icon": "fa-gauge",
             "kat": "tunggal"
         },
-        {
-            "name": "Users",
-            "href": "route('users')",
-            "current": "route().current('users')",
-            "icon": "fa-users",
-            "kat": "tunggal"
-        },
+        
         {
             "name": "Management Products",
             "icon": "fa-box",
-            "kat": "ganda",
-            
+            "kat": "ganda", 
             "isi": [
                 {
                     "subname": "Products",
@@ -39,6 +32,25 @@
             "current": "route().current('pos')",
             "icon": "fa-store",
             "kat": "tunggal"
+        },
+        {
+            "name": "Data Master",
+            "icon": "fa-gears",
+            "kat": "ganda", 
+            "isi": [
+                {
+                    "subname": "User",
+                    "href": "route('users')",
+                    "current": "route().current('users')"
+                    
+                },
+                {
+                    "subname": "Kategori",
+                    "href": "route('pemilik')",
+                    "current": "route().current('pemilik')"
+                    
+                }
+            ]
         }
         
     ],

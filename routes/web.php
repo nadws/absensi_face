@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PemilikController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,11 @@ Route::middleware('auth', SuperAdminRole::class)->group(function () {
 Route::middleware('auth', SuperAdminRole::class)->group(function () {
     Route::get('/stokopname', [StokOpnameController::class, 'index'])->name('stokopname');
     Route::get('/stokopname/viewOpname', [StokOpnameController::class, 'viewOpname'])->name('stokopname.viewOpname');
+});
+Route::middleware('auth', SuperAdminRole::class)->group(function () {
+    Route::get('/pemilik', [PemilikController::class, 'index'])->name('pemilik');
+    Route::get('/pemilik/create', [PemilikController::class, 'create'])->name('pemilik.create');
+    Route::post('/pemilik/store', [PemilikController::class, 'store'])->name('pemilik.store');
 });
 
 require __DIR__ . '/auth.php';
