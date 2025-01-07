@@ -1,3 +1,4 @@
+import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link, Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
@@ -33,22 +34,30 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         <>
             <Head title="Welcome" />
             <div className="container mx-auto">
-                <nav className="flex justify-between items-center py-4 px-8 fixed top-0 left-0 w-full bg-white shadow-md z-50">
-                    <p className="text-2xl font-poppins font-extrabold">
-                        PointOfSale
-                    </p>
+                <nav className="flex justify-between items-center  px-8 fixed top-0 left-0 w-full bg-white shadow-md z-50">
+                    <ApplicationLogo className="w-16 h-16 fill-current text-gray-500" />
 
                     <div className="flex space-x-4">
-                        <Link href={route("login")}>
-                            <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
-                                Login
-                            </button>
-                        </Link>
-                        <Link href={route("register")}>
-                            <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
-                                Sign Up
-                            </button>
-                        </Link>
+                        {auth.user ? (
+                            <Link href={route("dashboard")}>
+                                <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
+                                    Dashboard
+                                </button>
+                            </Link>
+                        ) : (
+                            <>
+                                <Link href={route("login")}>
+                                    <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
+                                        Login
+                                    </button>
+                                </Link>
+                                <Link href={route("register")}>
+                                    <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
+                                        Sign Up
+                                    </button>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </nav>
                 <div className="relative grid grid-cols-1 gap-4 mt-24 ">
