@@ -22,14 +22,7 @@ export default function Product({ auth, produk, filters }) {
         setSelectedImage(null); // Menghapus gambar dari state untuk menutup modal
     };
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Products
-                </h2>
-            }
-        >
+        <AuthenticatedLayout user={auth.user}>
             <Head title="Products" />
 
             <div className="py-12">
