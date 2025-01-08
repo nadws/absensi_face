@@ -48,5 +48,20 @@ class AkunPembayaran extends Controller
         return Inertia::render('Akun/create', $data);
     }
 
-    public function store(Request $r) {}
+    public function store(Request $request)
+    {
+        dd($request->kategori);
+
+        $request->validate([
+            'kategori' => 'required',
+        ]);
+
+        $data = [
+            'akun' => $request->akun,
+            'kategori_akun' => $request->kategori
+        ];
+
+        DB::table('akun_pembayaran')->insert($data);
+        return redirect()->route('akun');
+    }
 }

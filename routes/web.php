@@ -68,7 +68,7 @@ Route::middleware('auth', SuperAdminRole::class)->group(function () {
 Route::middleware('auth', SuperAdminRole::class)->group(function () {
     Route::get('/akun', [AkunPembayaran::class, 'index'])->name('akun');
     Route::get('/akun/create', [AkunPembayaran::class, 'create'])->name('akun.create');
-    Route::get('/akun/store', [AkunPembayaran::class, 'store'])->name('akun.store');
+    Route::post('/akun/store', [AkunPembayaran::class, 'store'])->name('akun.store');
 });
 
 require __DIR__ . '/auth.php';
