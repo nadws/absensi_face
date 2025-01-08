@@ -9,6 +9,7 @@ import { Transition } from "@headlessui/react";
 import Select2Box from "@/Components/Select2box";
 import roles from "@/data/role.json";
 import SecondaryButton from "@/Components/SecondaryButton";
+import SelectBox from "@/Components/Selectbox";
 
 export default function UserCreate({ auth }) {
     const { data, setData, post, errors, processing, recentlySuccessful } =
@@ -115,7 +116,7 @@ export default function UserCreate({ auth }) {
                                             htmlFor="role"
                                             value="Role"
                                         />
-                                        <Select2Box
+                                        <SelectBox
                                             onChange={(value) =>
                                                 setData("role", value)
                                             }

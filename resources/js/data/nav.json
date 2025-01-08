@@ -54,6 +54,18 @@
                     "href": "route('pemilik')",
                     "current": "route().current('pemilik')"
                     
+                },
+                {
+                    "subname": "Kategori Akun",
+                    "href": "route('kategoriakun')",
+                    "current": "route().current('kategoriakun')"
+                    
+                },
+                {
+                    "subname": "Akun Pembayaran",
+                    "href": "route('akun')",
+                    "current": "route().current('akun')"
+                    
                 }
             ]
         }

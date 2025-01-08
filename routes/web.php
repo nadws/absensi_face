@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AkunPembayaran;
+use App\Http\Controllers\KategoriAkunController;
 use App\Http\Controllers\PemilikController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
@@ -56,6 +58,17 @@ Route::middleware('auth', SuperAdminRole::class)->group(function () {
     Route::get('/pemilik', [PemilikController::class, 'index'])->name('pemilik');
     Route::get('/pemilik/create', [PemilikController::class, 'create'])->name('pemilik.create');
     Route::post('/pemilik/store', [PemilikController::class, 'store'])->name('pemilik.store');
+});
+
+Route::middleware('auth', SuperAdminRole::class)->group(function () {
+    Route::get('/kategoriakun', [KategoriAkunController::class, 'index'])->name('kategoriakun');
+    Route::get('/kategoriakun/create', [KategoriAkunController::class, 'create'])->name('kategoriakun.create');
+    Route::post('/kategoriakun/store', [KategoriAkunController::class, 'store'])->name('kategoriakun.store');
+});
+Route::middleware('auth', SuperAdminRole::class)->group(function () {
+    Route::get('/akun', [AkunPembayaran::class, 'index'])->name('akun');
+    Route::get('/akun/create', [AkunPembayaran::class, 'create'])->name('akun.create');
+    Route::get('/akun/store', [AkunPembayaran::class, 'store'])->name('akun.store');
 });
 
 require __DIR__ . '/auth.php';
