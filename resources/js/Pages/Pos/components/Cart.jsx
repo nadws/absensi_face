@@ -10,7 +10,7 @@ export default function Cart({
 }) {
     const handleImageError = (e) => {
         e.target.onerror = null; // Mencegah loop jika default image juga tidak tersedia
-        e.target.src = "/image/image.png"; // Path ke gambar default
+        e.target.src = "/storage/image/image.png"; // Path ke gambar default
     };
 
     return (

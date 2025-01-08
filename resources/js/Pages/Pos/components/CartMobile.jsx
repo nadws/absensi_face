@@ -11,13 +11,12 @@ export default function CartMobile({
 }) {
     const handleImageError = (e) => {
         e.target.onerror = null; // Mencegah loop jika default image juga tidak tersedia
-        e.target.src = "/image/image.png"; // Path ke gambar default
+        e.target.src = "/storage/image/image.png"; // Path ke gambar default
     };
     return (
         <div
-            className={`fixed top-0 right-0 h-full w-80 bg-white  shadow-lg transform z-50 ${
-                isOpen ? "translate-x-0" : "translate-x-full"
-            } transition-transform duration-300 ease-in-out`}
+            className={`fixed top-0 right-0 h-full w-80 bg-white  shadow-lg transform z-50 ${isOpen ? "translate-x-0" : "translate-x-full"
+                } transition-transform duration-300 ease-in-out`}
         >
             <button
                 onClick={toggleSidebar}

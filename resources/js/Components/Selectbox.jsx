@@ -2,6 +2,7 @@ export default function SelectBox({
     className = "",
     options = [],
     currentValue = "",
+    setJudul = "-Pilih-",
     ...props
 }) {
     return (
@@ -13,6 +14,7 @@ export default function SelectBox({
                 className
             }
         >
+            <option>{setJudul}</option>
             {options.map((option, index) => (
                 <option key={index} value={option.value}>
                     {option.label}

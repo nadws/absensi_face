@@ -9,7 +9,8 @@ import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import PaymentMobile from "@/Pages/pos/components/PaymentMobile";
+import PaymentMobile from "@/Pages/Pos/components/PaymentMobile";
+
 import ModalSuccess from "@/Components/ModalSuccess";
 
 export default function payment({ no_invoice, kategori, akun, success }) {
@@ -210,11 +211,10 @@ export default function payment({ no_invoice, kategori, akun, success }) {
                     {kategori.map((item) => (
                         <button
                             key={item.id}
-                            className={`py-3 px-6 border-b-2 ${
-                                isOpenValue === item.id
+                            className={`py-3 px-6 border-b-2 ${isOpenValue === item.id
                                     ? "border-[#F46700] text-[#F46700]"
                                     : ""
-                            } `}
+                                } `}
                             onClick={(event) => {
                                 event.preventDefault();
                                 toggleSidebar(item.id, event);
@@ -228,11 +228,10 @@ export default function payment({ no_invoice, kategori, akun, success }) {
                     {akun.map((item) => (
                         <div
                             key={item.id}
-                            className={` relative w-full ${
-                                isOpenValue === item.kategori_akun_id
+                            className={` relative w-full ${isOpenValue === item.kategori_akun_id
                                     ? ""
                                     : "hidden"
-                            }`}
+                                }`}
                         >
                             <TextInput
                                 type="number"

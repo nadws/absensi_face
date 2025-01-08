@@ -64,6 +64,8 @@ Route::middleware('auth', SuperAdminRole::class)->group(function () {
     Route::get('/kategoriakun', [KategoriAkunController::class, 'index'])->name('kategoriakun');
     Route::get('/kategoriakun/create', [KategoriAkunController::class, 'create'])->name('kategoriakun.create');
     Route::post('/kategoriakun/store', [KategoriAkunController::class, 'store'])->name('kategoriakun.store');
+    Route::get('/kategoriakun/edit/{id}', [KategoriAkunController::class, 'edit'])->name('kategoriakun.edit');
+    Route::post('/kategoriakun/update/{id}', [KategoriAkunController::class, 'update'])->name('kategoriakun.update');
 });
 Route::middleware('auth', SuperAdminRole::class)->group(function () {
     Route::get('/akun', [AkunPembayaran::class, 'index'])->name('akun');

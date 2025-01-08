@@ -27,6 +27,8 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
             foto: "image.png",
         });
 
+
+
     const submit = (e) => {
         e.preventDefault();
 
@@ -234,11 +236,12 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
                                             value="Kategori"
                                         />
                                         <SelectBox
-                                            onChange={(value) =>
-                                                setData("kategori", value)
+                                            onChange={(e) =>
+                                                setData("kategori", e.target.value)
+
                                             }
                                             id="kategori"
-                                            currentValue="kategori"
+                                            currentValue={data.kategori}
                                             options={kategori}
                                             className="w-full"
                                             placeholder="Pilih Kategori ..."
@@ -262,9 +265,8 @@ export default function UserCreate({ auth, kd_produk, kategori }) {
                                     </div>
 
                                     <div
-                                        className={`${
-                                            isOn === "Y" ? "" : "hidden"
-                                        }`}
+                                        className={`${isOn === "Y" ? "" : "hidden"
+                                            }`}
                                     >
                                         <InputLabel
                                             htmlFor="stok"

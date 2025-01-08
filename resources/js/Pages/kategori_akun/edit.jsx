@@ -6,27 +6,26 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Link, useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
+import Select2Box from "@/Components/Select2box";
+import roles from "@/data/role.json";
 import SecondaryButton from "@/Components/SecondaryButton";
-import SelectBox from "@/Components/Selectbox";
 
 export default function PemilikCreate({ auth, kategori }) {
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
-            akun: "",
-            kategori: "",
+            kategori: kategori.kategori,
         });
-
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("akun.store"), {
+        post(route("kategoriakun.update", kategori.id), {
             preserveScroll: true,
             onSuccess: () => {
-                alert("Akun Created");
+                alert("Kategori Created");
             },
             onError: (errors) => {
-                alert("Akun not created");
+                alert("Kategori not created");
             },
         });
     };
@@ -48,11 +47,11 @@ export default function PemilikCreate({ auth, kategori }) {
                             <section className="max-w-xl">
                                 <header>
                                     <h2 className="text-lg font-medium text-gray-900">
-                                        Create Akun
+                                        Create Kategori Akun
                                     </h2>
 
                                     <p className="mt-1 text-sm text-gray-600">
-                                        Create a new Akun.
+                                        Create a new Kategori Akun.
                                     </p>
                                 </header>
 
@@ -62,43 +61,23 @@ export default function PemilikCreate({ auth, kategori }) {
                                 >
                                     <div>
                                         <InputLabel
-                                            htmlFor="akun"
-                                            value="akun"
-                                        />
-
-                                        <TextInput
-                                            id="akun"
-                                            className="mt-1 block w-full"
-                                            value={data.akun}
-                                            onChange={(e) =>
-                                                setData("akun", e.target.value)
-                                            }
-                                            required
-                                            isFocused
-                                            autoComplete="akun"
-                                        />
-
-                                        <InputError
-                                            className="mt-2"
-                                            message={errors.akun}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel
                                             htmlFor="kategori"
                                             value="Kategori"
                                         />
-                                        <SelectBox
-                                            onChange={(e) => {
-                                                setData("kategori", e.target.value);
-                                            }}
 
+                                        <TextInput
                                             id="kategori"
-                                            currentValue={data.kategori}
-                                            options={kategori}
-                                            setJudul="-Pilih kategori pembayaran-"
-                                            className="w-full"
-                                            placeholder="Pilih Kategori ..."
+                                            className="mt-1 block w-full"
+                                            value={data.kategori}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "kategori",
+                                                    e.target.value
+                                                )
+                                            }
+                                            required
+                                            isFocused
+                                            autoComplete="kategori"
                                         />
 
                                         <InputError
@@ -113,7 +92,7 @@ export default function PemilikCreate({ auth, kategori }) {
                                         </PrimaryButton>
                                         <Link
                                             rel="stylesheet"
-                                            href={route("akun")}
+                                            href={route("kategoriakun")}
                                         >
                                             <SecondaryButton>
                                                 Cancel

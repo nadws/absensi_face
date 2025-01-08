@@ -48,6 +48,8 @@ class ProductController extends Controller
                 'label' => $item->pemilik,
             ];
         }, $kategori);
+
+        
         return Inertia::render('Product/create', [
             'kd_produk' => $kd_produk,
             'kategori' => $jsonKategori,

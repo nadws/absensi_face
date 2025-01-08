@@ -22,7 +22,7 @@ class AkunPembayaran extends Controller
 
 
         return Inertia::render('Akun/index', [
-            'akun' => $akun,
+            'akun_pembayaran' => $akun,
             'filters' => [
                 'search' => $search,
                 'paginate' => $paginate
@@ -36,11 +36,12 @@ class AkunPembayaran extends Controller
         $kategori = DB::table('kategori_pembayaran')->get()->toArray();
         $jsonKategori = array_map(function ($item) {
             return [
-                'value' => (string) $item->id,
+                'value' => $item->id,
                 'label' => $item->kategori,
             ];
         }, $kategori);
 
+        
         $data = [
             'kategori' => $jsonKategori
         ];
@@ -50,15 +51,14 @@ class AkunPembayaran extends Controller
 
     public function store(Request $request)
     {
-        dd($request->kategori);
-
+        
         $request->validate([
             'kategori' => 'required',
         ]);
 
         $data = [
             'akun' => $request->akun,
-            'kategori_akun' => $request->kategori
+            'kategori_akun_id' => $request->kategori
         ];
 
         DB::table('akun_pembayaran')->insert($data);
