@@ -33,26 +33,26 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="container mx-auto">
-                <nav className="flex justify-between items-center  px-8 fixed top-0 left-0 w-full bg-white shadow-md z-50">
+            <div className="container mx-auto flex justify-center items-center">
+                <nav className="flex justify-between items-center  px-8 fixed top-4 border border-[#F46700]  w-11/12 bg-white shadow-md z-50 left-1/2 transform -translate-x-1/2 rounded-3xl hover:shadow-2xl hover:shadow-[#F46700]">
                     <ApplicationLogo className="w-16 h-16 fill-current text-gray-500" />
 
                     <div className="flex space-x-4">
                         {auth.user ? (
                             <Link href={route("dashboard")}>
-                                <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
+                                <button className="hover:bg-[#F46700] hover:text-white text-[#F46700] py-2 px-4 rounded-xl font-mona font-bold">
                                     Dashboard
                                 </button>
                             </Link>
                         ) : (
                             <>
                                 <Link href={route("login")}>
-                                    <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
+                                    <button className="hover:bg-[#F46700] hover:text-white text-[#F46700] py-2 px-4 rounded-xl font-mona font-bold">
                                         Login
                                     </button>
                                 </Link>
                                 <Link href={route("register")}>
-                                    <button className="hover:bg-[#F46700] hover:text-white py-2 px-4 rounded-xl font-mona font-bold">
+                                    <button className="hover:bg-[#F46700] hover:text-white text-[#F46700] py-2 px-4 rounded-xl font-mona font-bold">
                                         Sign Up
                                     </button>
                                 </Link>
@@ -60,7 +60,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         )}
                     </div>
                 </nav>
-                <div className="relative grid grid-cols-1 gap-4 mt-24 ">
+                <div className="relative lg:grid grid-cols-1 gap-4 mt-24 hidden">
                     <div className="relative h-4/5 w-full">
                         <img
                             src={images[currentIndex]}
