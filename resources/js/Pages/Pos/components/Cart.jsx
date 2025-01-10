@@ -19,7 +19,7 @@ export default function Cart({
                 <h1 className="text-2xl font-semibold mb-4 font-mona">
                     Shopping Cart
                 </h1>
-                <div className="h-96 overflow-y-scroll">
+                <div className="h-96 overflow-y-scroll thin-scrollbar">
                     {cardItems.length === 0 ? (
                         <>
                             <hr className="border-t border-gray-300" />

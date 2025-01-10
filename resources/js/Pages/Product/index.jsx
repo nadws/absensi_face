@@ -128,15 +128,6 @@ export default function Product({ auth, produk, filters }) {
                                                 url={`/products/delete/${id}`}
                                                 confirm={true}
                                                 confirmMessage="Apakah Anda yakin ingin menghapus data ini?"
-                                                onClick={(e) => {
-                                                    if (
-                                                        !window.confirm(
-                                                            "Apakah Anda yakin ingin menghapus data ini?"
-                                                        )
-                                                    ) {
-                                                        e.preventDefault(); // Batalkan navigasi jika tidak dikonfirmasi
-                                                    }
-                                                }}
                                             >
                                                 <i className="fa-solid fa-trash-alt"></i>
                                             </Buttonaksi>
